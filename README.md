@@ -50,7 +50,7 @@ doc フォルダには、このプロジェクトに関するドキュメント�
 ２. クローンしたディレクトリの名称を変更:
 
    ```bash
-   mv React-TS-TailwindCss-vite-Vscode-templete/ 作るプロジェクトの名称/
+   mv React-TS-TailwindCss-Vite-Vscode-templete-study/ 作るプロジェクトの名称/
    ```
 
 3. 依存関係をインストールする:
