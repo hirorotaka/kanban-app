@@ -3,14 +3,17 @@ import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
-import ContextProvider from './context/index.tsx';
+import NavItemProvider from './context/NavItemContext.tsx';
+import { BoardProvider } from './context/BoardContext.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ContextProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ContextProvider>
+    <NavItemProvider>
+      <BoardProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </BoardProvider>
+    </NavItemProvider>
   </React.StrictMode>
 );

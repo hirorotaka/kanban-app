@@ -1,13 +1,16 @@
 import { IoTrashOutline } from 'react-icons/io5';
-import { AppContext } from '../../context';
+import { NavItemContext } from '../../context/NavItemContext';
 import { useContext } from 'react';
 
 export const NavItem = ({ id, icon, label }) => {
-  const contextValues = useContext(AppContext);
-  const { removeNavItem, setNavCheckId, navCheckId } = contextValues.board;
+  const NavItemContextValues = useContext(NavItemContext);
+  const { removeNavItem, setNavCheckId, navCheckId } =
+    NavItemContextValues?.board || {};
 
   const handleClick = () => {
-    setNavCheckId(id);
+    if (setNavCheckId) {
+      setNavCheckId(id);
+    }
   };
 
   return (
@@ -27,7 +30,7 @@ export const NavItem = ({ id, icon, label }) => {
       </div>
       {navCheckId === id && (
         <button
-          onClick={() => removeNavItem(id)}
+          onClick={removeNavItem && (() => removeNavItem(id))}
           className={`rounded px-1 py-2 text-black transition duration-200 ease-in-out hover:text-red-500`}
         >
           <IoTrashOutline size={20} />

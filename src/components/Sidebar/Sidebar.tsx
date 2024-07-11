@@ -3,16 +3,17 @@ import { PlusIcon } from '../UI/icons/PlusIcon';
 import { Logo } from './Logo';
 import { NavItem } from './NavItem';
 import { useContext, useEffect } from 'react';
-import { AppContext } from '../../context';
+import { NavItemContext } from '../../context/NavItemContext';
 
 export const Sidebar = () => {
-  const contextValues = useContext(AppContext);
+  const NavItemContextValues = useContext(NavItemContext);
 
-  if (!contextValues) {
+  if (!NavItemContextValues) {
     throw new Error('error');
   }
 
-  const { navItems, setNavCheckId, createNewNavItem } = contextValues.board;
+  const { navItems, setNavCheckId, createNewNavItem } =
+    NavItemContextValues.board;
   const { boardId } = useParams();
 
   useEffect(() => {

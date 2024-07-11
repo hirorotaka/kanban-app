@@ -2,12 +2,14 @@ import { createContext, useState } from 'react';
 import { defaultNavItems } from '../data/navItems';
 import { generateId } from '../utils/utils';
 import { IoHome } from 'react-icons/io5';
-import { ContextProviderProps, ContextValues } from '../types/type';
+import { ContextProviderProps, NavItemContextValues } from '../types/type';
 
 // 初期値を設定してコンテキストを作成
-export const AppContext = createContext<ContextValues | undefined>(undefined);
+export const NavItemContext = createContext<NavItemContextValues | undefined>(
+  undefined
+);
 
-const ContextProvider = ({ children }: ContextProviderProps) => {
+const NavItemProvider = ({ children }: ContextProviderProps) => {
   const [navItems, setNavItems] = useState(defaultNavItems);
   const [deleted, setDeleted] = useState<boolean>(false);
   const [navCheckId, setNavCheckId] = useState('');
@@ -29,7 +31,7 @@ const ContextProvider = ({ children }: ContextProviderProps) => {
   };
 
   // 最終的プロバイダーに渡す値を定義
-  const contextValues: ContextValues = {
+  const contextValues: NavItemContextValues = {
     board: {
       deleted,
       setDeleted,
@@ -41,8 +43,10 @@ const ContextProvider = ({ children }: ContextProviderProps) => {
     },
   };
   return (
-    <AppContext.Provider value={contextValues}>{children}</AppContext.Provider>
+    <NavItemContext.Provider value={contextValues}>
+      {children}
+    </NavItemContext.Provider>
   );
 };
 
-export default ContextProvider;
+export default NavItemProvider;

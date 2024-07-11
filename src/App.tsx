@@ -6,11 +6,11 @@ import { Home } from './pages/Home/Home';
 import { Layout } from './layout/Layout';
 import { BoardDelete } from './pages/BoardDelete';
 import { useContext, useEffect } from 'react';
-import { AppContext } from './context';
+import { NavItemContext } from './context/NavItemContext';
 
 function App() {
-  const contextValues = useContext(AppContext);
-  const { deleted, setDeleted } = contextValues?.board || {};
+  const NavItemContextValues = useContext(NavItemContext);
+  const { deleted, setDeleted } = NavItemContextValues?.board || {};
 
   const navigate = useNavigate();
   useEffect(() => {

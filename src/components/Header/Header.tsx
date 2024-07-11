@@ -1,8 +1,8 @@
 import { useContext } from 'react';
-import { AppContext } from '../../context';
+import { NavItemContext } from '../../context/NavItemContext';
 
 export const Header = () => {
-  const contextValues = useContext(AppContext);
+  const contextValues = useContext(NavItemContext);
   const { navItems, navCheckId } = contextValues?.board || {};
   const selectedItem = navItems?.find((item) => item.id === navCheckId);
 
