@@ -16,8 +16,7 @@ export const BoardContext = createContext<BoardContextValues | undefined>(
 );
 
 export const BoardProvider = ({ children }: ContextProviderProps) => {
-  const NavItemContextValues = useContext(NavItemContext);
-  const { navCheckId } = NavItemContextValues?.board || {};
+  const { navCheckId } = useContext(NavItemContext) || {};
 
   const [columns, setColumns] = useState<Column[]>(defaultColumns);
   const columnsIds: (UniqueIdentifier | { id: UniqueIdentifier })[] = useMemo(

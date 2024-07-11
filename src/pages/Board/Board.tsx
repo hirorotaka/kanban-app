@@ -5,8 +5,7 @@ import { NavItemContext } from '../../context/NavItemContext';
 import { NotFound } from '../NotFound';
 
 export const Board = () => {
-  const NavItemContextValues = useContext(NavItemContext);
-  const { navItems, navCheckId } = NavItemContextValues?.board || {};
+  const { navItems, navCheckId } = useContext(NavItemContext) || {};
 
   const selectedItem = navItems?.find((item) => item.id === navCheckId);
 

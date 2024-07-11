@@ -2,8 +2,7 @@ import { useContext } from 'react';
 import { NavItemContext } from '../../context/NavItemContext';
 
 export const Header = () => {
-  const contextValues = useContext(NavItemContext);
-  const { navItems, navCheckId } = contextValues?.board || {};
+  const { navItems, navCheckId } = useContext(NavItemContext) || {};
   const selectedItem = navItems?.find((item) => item.id === navCheckId);
 
   if (!selectedItem) {

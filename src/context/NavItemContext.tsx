@@ -32,15 +32,13 @@ const NavItemProvider = ({ children }: ContextProviderProps) => {
 
   // 最終的プロバイダーに渡す値を定義
   const contextValues: NavItemContextValues = {
-    board: {
-      deleted,
-      setDeleted,
-      navItems,
-      createNewNavItem,
-      removeNavItem,
-      navCheckId,
-      setNavCheckId,
-    },
+    deleted,
+    setDeleted,
+    navItems,
+    createNewNavItem,
+    removeNavItem,
+    navCheckId,
+    setNavCheckId,
   };
   return (
     <NavItemContext.Provider value={contextValues}>

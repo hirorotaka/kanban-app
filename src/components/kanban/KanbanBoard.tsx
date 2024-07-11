@@ -19,7 +19,7 @@ import { BoardContext } from '../../context/BoardContext';
 import { NavItemContext } from '../../context/NavItemContext';
 
 export const KanbanBoard = () => {
-  const { navCheckId } = useContext(NavItemContext)?.board || {};
+  const { navCheckId } = useContext(NavItemContext) || {};
   const { filterColumns, setColumns, createNewColumn, columnsIds } =
     useContext(BoardContext)?.column || {};
   const { tasks, setTasks } = useContext(BoardContext)?.task || {};

@@ -25,15 +25,13 @@ export type ContextProviderProps = {
 
 // コンテキストの型を定義
 export type NavItemContextValues = {
-  board: {
-    deleted: boolean;
-    setDeleted: React.Dispatch<React.SetStateAction<boolean>>;
-    navItems: NavItem[];
-    createNewNavItem: () => void;
-    removeNavItem: (navId: string) => void;
-    navCheckId: string;
-    setNavCheckId: React.Dispatch<React.SetStateAction<string>>;
-  };
+  deleted: boolean;
+  setDeleted: React.Dispatch<React.SetStateAction<boolean>>;
+  navItems: NavItem[];
+  createNewNavItem: () => void;
+  removeNavItem: (navId: string) => void;
+  navCheckId: string;
+  setNavCheckId: React.Dispatch<React.SetStateAction<string>>;
 };
 
 // コンテキストの型を定義
@@ -64,4 +62,10 @@ export type ColumnContainerProps = {
 export type TaskProps = {
   task: Task;
   newTaskId?: string | null;
+};
+
+export type NavItemProps = {
+  id: string;
+  icon: JSX.Element;
+  label: string;
 };

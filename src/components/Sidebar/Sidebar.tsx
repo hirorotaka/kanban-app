@@ -6,17 +6,12 @@ import { useContext, useEffect } from 'react';
 import { NavItemContext } from '../../context/NavItemContext';
 
 export const Sidebar = () => {
-  const NavItemContextValues = useContext(NavItemContext);
-
-  if (!NavItemContextValues) {
-    throw new Error('error');
-  }
-
   const { navItems, setNavCheckId, createNewNavItem } =
-    NavItemContextValues.board;
+    useContext(NavItemContext) || {};
   const { boardId } = useParams();
 
   useEffect(() => {
+    if (!navItems || !setNavCheckId) return;
     const selectedItem = navItems.find((item) => item.id === boardId);
     if (selectedItem) {
       setNavCheckId(selectedItem.id);
@@ -31,7 +26,7 @@ export const Sidebar = () => {
         <Logo />
       </Link>
       <div className="grow space-y-1">
-        {navItems.map((item, index) => (
+        {navItems?.map((item, index) => (
           <Link to={`board/${item.id}`} key={index}>
             <NavItem icon={item.icon} label={item.label} id={item.id} />
           </Link>

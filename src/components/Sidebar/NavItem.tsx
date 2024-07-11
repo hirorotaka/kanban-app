@@ -1,11 +1,11 @@
 import { IoTrashOutline } from 'react-icons/io5';
 import { NavItemContext } from '../../context/NavItemContext';
 import { useContext } from 'react';
+import { NavItemProps } from '../../types/type';
 
-export const NavItem = ({ id, icon, label }) => {
-  const NavItemContextValues = useContext(NavItemContext);
+export const NavItem = ({ id, icon, label }: NavItemProps) => {
   const { removeNavItem, setNavCheckId, navCheckId } =
-    NavItemContextValues?.board || {};
+    useContext(NavItemContext) || {};
 
   const handleClick = () => {
     if (setNavCheckId) {

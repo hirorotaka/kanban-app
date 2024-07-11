@@ -9,8 +9,7 @@ import { useContext, useEffect } from 'react';
 import { NavItemContext } from './context/NavItemContext';
 
 function App() {
-  const NavItemContextValues = useContext(NavItemContext);
-  const { deleted, setDeleted } = NavItemContextValues?.board || {};
+  const { deleted, setDeleted } = useContext(NavItemContext) || {};
 
   const navigate = useNavigate();
   useEffect(() => {
