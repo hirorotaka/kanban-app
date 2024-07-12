@@ -2,13 +2,13 @@ import { useRef, useEffect, useState } from 'react';
 import { IoAlertCircleOutline } from 'react-icons/io5';
 import { ErrorMessageProps } from '../../types/type';
 
-export const CustomErrorMessage = ({ message, inputId }: ErrorMessageProps) => {
+export const CustomErrorMessage = ({ message, tagId }: ErrorMessageProps) => {
   const [position, setPosition] = useState({ top: 0, right: 0, width: 0 });
   const messageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const updatePosition = () => {
-      const inputElement = document.getElementById(inputId);
+      const inputElement = document.getElementById(tagId);
       if (inputElement && messageRef.current) {
         const rect = inputElement.getBoundingClientRect();
         setPosition({
@@ -22,7 +22,7 @@ export const CustomErrorMessage = ({ message, inputId }: ErrorMessageProps) => {
     updatePosition();
     window.addEventListener('resize', updatePosition);
     return () => window.removeEventListener('resize', updatePosition);
-  }, [inputId]);
+  }, [tagId]);
 
   return (
     <div

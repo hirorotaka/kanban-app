@@ -73,5 +73,5 @@ export type NavItemProps = {
 
 export type ErrorMessageProps = {
   message: string;
-  inputId: string;
+  tagId: string;
 };
