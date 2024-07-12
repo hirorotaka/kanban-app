@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from 'react';
 import { IoAlertCircleOutline } from 'react-icons/io5';
 import { ErrorMessageProps } from '../../types/type';
 
-export const FormErrorMessage = ({ message, inputId }: ErrorMessageProps) => {
+export const CustomErrorMessage = ({ message, inputId }: ErrorMessageProps) => {
   const [position, setPosition] = useState({ top: 0, right: 0, width: 0 });
   const messageRef = useRef<HTMLDivElement>(null);
 
