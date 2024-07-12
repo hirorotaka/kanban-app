@@ -32,6 +32,7 @@ export type NavItemContextValues = {
   removeNavItem: (navId: string) => void;
   navCheckId: string;
   setNavCheckId: React.Dispatch<React.SetStateAction<string>>;
+  updateNavItem: (id: string, label: string) => void;
 };
 
 // コンテキストの型を定義
@@ -68,4 +69,9 @@ export type NavItemProps = {
   id: string;
   icon: JSX.Element;
   label: string;
+};
+
+export type ErrorMessageProps = {
+  message: string;
+  inputId: string;
 };

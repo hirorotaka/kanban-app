@@ -21,7 +21,7 @@ export const Sidebar = () => {
   }, [boardId, navItems, setNavCheckId]);
 
   return (
-    <div className="flex h-screen  min-w-[200px] flex-col border-r bg-gray-100 p-4">
+    <div className="flex h-screen  min-w-[250px]  max-w-[250px] flex-col border-r bg-gray-100 p-4">
       <Link to="/">
         <Logo />
       </Link>
