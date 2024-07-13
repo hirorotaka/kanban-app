@@ -6,6 +6,9 @@ import { CSS } from '@dnd-kit/utilities';
 import { IoAdd, IoApps, IoTrashOutline } from 'react-icons/io5';
 import { SortableContext } from '@dnd-kit/sortable';
 import { BoardContext } from '../../context/BoardContext';
+import { CustomErrorMessage } from '../CustomErrorMessage/CustomErrorMessage';
+import { useColumnContainer } from '../../hooks/useColumnContainer';
+import { InputForm } from '../UI/Form/inputForm';
 
 export const ColumnContainer = ({
   column,
@@ -13,13 +16,27 @@ export const ColumnContainer = ({
 }: ColumnContainerProps) => {
   const { updateColumn, deleteColumn } = useContext(BoardContext)?.column || {};
   const { createTask, tasksIds } = useContext(BoardContext)?.task || {};
-  const [editMode, setEditMode] = useState(false);
-  const [prevContent, setPrevContent] = useState(column.title);
   const [isGrabbing, setIsGrabbing] = useState(false);
   const tasksContainerRef = useRef<HTMLDivElement>(null);
   const [mouseIsOver, setMouseIsOver] = useState(false);
   const prevTasksLengthRef = useRef(filterTasks?.length || 0);
   const [newTaskId, setNewTaskId] = useState<string | null>(null);
+
+  if (!updateColumn) {
+    throw new Error('updateColumn is not defined');
+  }
+
+  const {
+    register,
+    handleSubmit,
+    errors,
+    onSubmit,
+    handleTextareaChange,
+    trigger,
+    inputId,
+    editMode,
+    setEditMode,
+  } = useColumnContainer({ column, updateColumn });
 
   // @dnd-kit/sortableを使用してカラムのドラッグ&ドロップ機能を実装
   const {
@@ -56,18 +73,6 @@ export const ColumnContainer = ({
     prevTasksLengthRef.current = filterTasks?.length || 0;
   }, [filterTasks?.length]);
 
-  // カラムのタイトルを更新する関数
-  const handleUpdateColumn = (content: string) => {
-    if (updateColumn) {
-      if (content.trim() === '') {
-        updateColumn(column.id, prevContent);
-      } else {
-        updateColumn(column.id, content);
-        setPrevContent(content);
-      }
-    }
-  };
-
   // カラムがドラッグ中の場合、プレースホルダーを表示
   if (isDragging) {
     return (
@@ -89,14 +94,14 @@ export const ColumnContainer = ({
       <div
         onMouseEnter={() => setMouseIsOver(true)}
         onMouseLeave={() => setMouseIsOver(false)}
-        className="flex h-[60px] items-center justify-between rounded-t-xl bg-gradient-to-r from-blue-500 to-indigo-500 p-3 font-bold text-white shadow-md"
+        className="flex h-[60px] items-center justify-between rounded-t-xl bg-gradient-to-r from-blue-500 to-indigo-500 p-1 font-bold text-white shadow-md"
       >
         <div className="flex items-center gap-1">
           {/* ドラッグアイコン表示 */}
           <button
             {...attributes}
             {...listeners}
-            className={`mr-1 p-1 text-gray-500 focus:outline-none ${
+            className={`mr-1 text-gray-500 focus:outline-none ${
               isGrabbing ? 'cursor-grabbing' : 'cursor-grab'
             }`}
             onMouseDown={() => setIsGrabbing(true)}
@@ -109,29 +114,31 @@ export const ColumnContainer = ({
             onClick={() => {
               setEditMode(true);
             }}
-            className="rounded-full px-2 py-1 text-lg font-bold text-white"
+            className="resize-none whitespace-pre-wrap break-words rounded-full p-1 text-base font-bold text-white"
           >
-            {!editMode && column.title}
-            {editMode && (
-              <input
-                className="rounded border px-2 text-black outline-none focus:border-blue-500"
-                value={column.title}
-                onChange={(e) => {
-                  if (updateColumn) {
-                    updateColumn(column.id, e.target.value);
-                  }
-                }}
-                autoFocus
-                onBlur={() => {
-                  handleUpdateColumn(column.title);
-                  setEditMode(false);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key !== 'Enter') return;
-                  handleUpdateColumn(column.title);
-                  setEditMode(false);
-                }}
-              />
+            {!editMode ? (
+              column.title
+            ) : (
+              <>
+                {column.title}
+                <InputForm
+                  formUi="w-[200px] text-sm"
+                  handleSubmit={handleSubmit}
+                  onSubmit={onSubmit}
+                  register={register}
+                  trigger={trigger}
+                  errors={errors}
+                  handleTextareaChange={handleTextareaChange}
+                  tagId={inputId}
+                  inputType="input"
+                />
+                {errors.label?.message && (
+                  <CustomErrorMessage
+                    message={errors.label.message}
+                    tagId={inputId}
+                  />
+                )}
+              </>
             )}
           </div>
           {/* タスクの個数を表示 */}

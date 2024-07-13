@@ -73,5 +73,9 @@ export type NavItemProps = {
 
 export type ErrorMessageProps = {
   message: string;
-  tagId: string;
+};
+
+export type useColumnContainerProps = {
+  column: Column;
+  updateColumn: (id: string, title: string) => void;
 };
