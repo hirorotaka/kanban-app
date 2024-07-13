@@ -1,10 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { NavItemContext } from '../context/NavItemContext';
+import { useColumnContainerProps } from '../types/type';
+import { useEffect, useState } from 'react';
 
-const varidationMaxlength = 30;
+const varidationMaxlength = 15;
 
 // バリデーションスキーマの定義
 const validationSchema = z.object({
@@ -21,13 +21,12 @@ const validationSchema = z.object({
 // バリデーションスキーマから型を推論
 export type FormValues = z.infer<typeof validationSchema>;
 
-export const useHeader = () => {
-  const { navItems, navCheckId, updateNavItem } =
-    useContext(NavItemContext) || {};
-  const selectedItem = navItems?.find((item) => item.id === navCheckId);
-
+export const useColumnContainer = ({
+  column,
+  updateColumn,
+}: useColumnContainerProps) => {
   const [editMode, setEditMode] = useState(false);
-  const [prevLabel, setPrevLabel] = useState(selectedItem?.label || '');
+  const [prevTitle, setPrevLabel] = useState(column?.title || '');
 
   const {
     register,
@@ -40,7 +39,7 @@ export const useHeader = () => {
     trigger,
     watch,
   } = useForm<FormValues>({
-    defaultValues: { label: selectedItem?.label || '' },
+    defaultValues: { label: column?.title || '' },
     resolver: zodResolver(validationSchema),
     mode: 'onChange',
   });
@@ -58,31 +57,33 @@ export const useHeader = () => {
     return () => subscription.unsubscribe();
   }, [watch, setValue]);
 
-  useEffect(() => {
-    if (selectedItem) {
-      reset({ label: selectedItem.label });
-      setPrevLabel(selectedItem.label);
-    }
-  }, [selectedItem, reset]);
+  const inputId = column?.id || '';
 
-  const handleUpdateNavItem = (label: string) => {
-    if (!updateNavItem || !selectedItem) return;
-    updateNavItem(selectedItem.id, label);
+  useEffect(() => {
+    if (column) {
+      reset({ label: column.title });
+      setPrevLabel(column.title);
+    }
+  }, [column, reset]);
+
+  const handleUpdateColumn = (label: string) => {
+    if (!updateColumn || !column) return;
+    updateColumn(column.id, label);
     setPrevLabel(label);
   };
 
   const onSubmit = (data: FormValues) => {
-    handleUpdateNavItem(data.label);
+    handleUpdateColumn(data.label);
     setEditMode(false);
   };
 
   const handleTextareaChange = () => {
     const currentLabel = getValues('label');
 
-    if (isValid && currentLabel !== prevLabel) {
-      handleUpdateNavItem(currentLabel);
+    if (isValid && currentLabel !== prevTitle) {
+      handleUpdateColumn(currentLabel);
     } else if (!isValid) {
-      setValue('label', prevLabel);
+      setValue('label', prevTitle);
     }
     setEditMode(false);
     clearErrors('label');
@@ -94,8 +95,10 @@ export const useHeader = () => {
   };
 
   return {
-    selectedItem,
+    column,
     editMode,
+    setEditMode,
+    inputId,
     errors,
     isValid,
     register,

@@ -12,9 +12,9 @@ type FormProps = {
   register: UseFormRegister<{ label: string }>;
   trigger: UseFormTrigger<{ label: string }>;
   errors: FieldErrors<{ label: string }>;
-  handleBlur: () => void;
   tagId: string;
   inputType: 'input' | 'textarea';
+  handleTextareaChange: () => void;
 };
 
 export const Form = ({
@@ -23,9 +23,9 @@ export const Form = ({
   onSubmit,
   register,
   trigger,
-  handleBlur,
   tagId,
   inputType,
+  handleTextareaChange,
 }: FormProps) => {
   return (
     <div className={`${formUi}`}>
@@ -33,19 +33,35 @@ export const Form = ({
         <div className="grow">
           {inputType === 'input' ? (
             <input
-              className="w-full rounded border-2 pl-1 font-bold text-black outline-none focus:border-blue-500"
+              className="w-full rounded border-2  bg-blue-100 font-bold text-black outline-none focus:border-blue-500"
               id={tagId}
               {...register('label', { onChange: () => trigger('label') })}
               autoFocus
-              onBlur={handleBlur}
+              onBlur={handleTextareaChange}
             />
           ) : (
             <textarea
-              className="w-full rounded border-2 p-1 font-bold text-black outline-none focus:border-blue-500"
+              className="w-full resize-none overflow-hidden rounded
+              border-2 p-1 font-bold text-black outline-none focus:border-blue-500"
               id={tagId}
               {...register('label', { onChange: () => trigger('label') })}
               autoFocus
-              onBlur={handleBlur}
+              onBlur={handleTextareaChange}
+              onKeyDown={(e) => {
+                const textarea = e.target as HTMLTextAreaElement;
+                const currentRow = textarea.value
+                  .slice(0, textarea.selectionStart)
+                  .split('\n').length;
+
+                if (e.key === 'Enter' && currentRow >= 2) {
+                  e.preventDefault();
+                }
+
+                if (e.key === 'Enter' && e.shiftKey) {
+                  handleTextareaChange();
+                }
+              }}
+              rows={2}
             />
           )}
         </div>
