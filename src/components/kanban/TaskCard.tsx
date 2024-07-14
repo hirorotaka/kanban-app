@@ -5,7 +5,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { BoardContext } from '../../context/BoardContext';
 
-export const CardTask = ({ task, newTaskId }: TaskProps) => {
+export const CardTask = ({ task, newTaskId, setNewTaskId }: TaskProps) => {
   const { deleteTask, updateTask } = useContext(BoardContext)?.task || {};
 
   const [editMode, setEditMode] = useState(false);
@@ -36,8 +36,8 @@ export const CardTask = ({ task, newTaskId }: TaskProps) => {
   };
 
   // 編集モードを切り替える関数
-  const toggleEditMode = () => {
-    setEditMode((prev) => !prev);
+  const handleEditMode = () => {
+    setEditMode(true);
   };
 
   // タスクの内容を更新する関数
@@ -53,6 +53,7 @@ export const CardTask = ({ task, newTaskId }: TaskProps) => {
 
   useEffect(() => {
     if (newTaskId?.id === task.id && newTaskId.isNewTask) {
+      console.log('newTaskId', newTaskId);
       setEditMode(true);
     }
   }, [newTaskId]);
@@ -101,7 +102,7 @@ export const CardTask = ({ task, newTaskId }: TaskProps) => {
           {/* タスク削除アイコンの表示 */}
           <div className={`flex ${!mouseIsOver && !editMode && 'hidden'}`}>
             <button
-              onClick={toggleEditMode}
+              onClick={handleEditMode}
               className={`rounded px-1 py-2 text-gray-500 transition duration-200 ease-in-out hover:text-red-500`}
             >
               <IoPencil size={18} />
@@ -139,12 +140,14 @@ export const CardTask = ({ task, newTaskId }: TaskProps) => {
                 autoFocus
                 onBlur={() => {
                   handleUpdateTask(task.content);
-                  toggleEditMode();
+                  setEditMode(false);
+                  setNewTaskId(null);
                 }}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' && e.shiftKey) {
                     handleUpdateTask(task.content);
-                    toggleEditMode();
+                    setEditMode(false);
+                    setNewTaskId(null);
                   }
                 }}
                 style={{ lineHeight: '1.5', minHeight: '100px' }}
