@@ -1,7 +1,6 @@
 import { createContext, useState } from 'react';
 import { defaultNavItems } from '../data/navItems';
 import { generateId } from '../utils/utils';
-import { IoHome } from 'react-icons/io5';
 import {
   ContextProviderProps,
   NavItem,
@@ -21,7 +20,7 @@ const NavItemProvider = ({ children }: ContextProviderProps) => {
   const createNewNavItem = () => {
     const newNavItem = {
       id: generateId(),
-      icon: <IoHome />,
+      icon: '🏠',
       label: 'default',
     };
     setNavItems([...navItems, newNavItem]);
@@ -33,6 +32,14 @@ const NavItemProvider = ({ children }: ContextProviderProps) => {
       return { ...navItem, label };
     });
 
+    setNavItems(newNavItems);
+  };
+
+  const updateNavIcon = (id: string, icon: string) => {
+    const newNavItems: NavItem[] = navItems.map((navItem) => {
+      if (navItem.id !== id) return navItem;
+      return { ...navItem, icon };
+    });
     setNavItems(newNavItems);
   };
 
@@ -53,6 +60,7 @@ const NavItemProvider = ({ children }: ContextProviderProps) => {
     navCheckId,
     setNavCheckId,
     updateNavItem,
+    updateNavIcon,
   };
   return (
     <NavItemContext.Provider value={contextValues}>

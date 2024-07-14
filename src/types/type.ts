@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 
 export type NavItem = {
   id: string;
-  icon: JSX.Element;
+  icon: string;
   label: string;
 };
 
@@ -33,6 +33,7 @@ export type NavItemContextValues = {
   navCheckId: string;
   setNavCheckId: React.Dispatch<React.SetStateAction<string>>;
   updateNavItem: (id: string, label: string) => void;
+  updateNavIcon: (id: string, icon: string) => void;
 };
 
 // コンテキストの型を定義
@@ -66,6 +67,12 @@ export type TaskProps = {
     id: string;
     isNewTask: boolean;
   } | null;
+  setNewTaskId: React.Dispatch<
+    React.SetStateAction<{
+      id: string;
+      isNewTask: boolean;
+    } | null>
+  >;
 };
 
 export type NavItemProps = {
@@ -81,4 +88,13 @@ export type ErrorMessageProps = {
 export type useColumnContainerProps = {
   column: Column;
   updateColumn: (id: string, title: string) => void;
+};
+
+export type EmojiPickerProps = {
+  icon: string;
+  onChange: (icon: string) => void;
+};
+
+export type EmojiSelectEvent = {
+  unified: string;
 };

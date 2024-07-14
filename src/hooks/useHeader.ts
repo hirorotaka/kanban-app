@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { NavItemContext } from '../context/NavItemContext';
 
 export const useHeader = () => {
-  const { navItems, navCheckId, updateNavItem } =
+  const { navItems, navCheckId, updateNavItem, updateNavIcon } =
     useContext(NavItemContext) || {};
   const selectedItem = navItems?.find((item) => item.id === navCheckId);
 
@@ -33,6 +33,11 @@ export const useHeader = () => {
     setIsEditing(true);
   };
 
+  const onIconChange = (icon: string) => {
+    if (!selectedItem || !updateNavIcon) return;
+    updateNavIcon(selectedItem.id, icon);
+  };
+
   return {
     selectedItem,
     isEditing,
@@ -40,5 +45,6 @@ export const useHeader = () => {
     handleHeaderChange,
     handleOnClick,
     editValue,
+    onIconChange,
   };
 };

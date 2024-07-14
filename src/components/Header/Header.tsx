@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react';
 import { useHeader } from '../../hooks/useHeader';
+import { EmojiPicker } from '../EmojiPicker/EmojiPicker';
 
 export const Header = () => {
   const {
@@ -8,7 +10,15 @@ export const Header = () => {
     handleHeaderChange,
     handleOnClick,
     editValue,
+    onIconChange,
   } = useHeader();
+
+  const [icon, setIcon] = useState('');
+
+  useEffect(() => {
+    if (!selectedItem) return;
+    setIcon(selectedItem?.icon);
+  }, [selectedItem]);
 
   if (!selectedItem) {
     return null;
@@ -16,8 +26,8 @@ export const Header = () => {
 
   return (
     <header className="bg-white p-4 shadow-lg transition-shadow">
-      <div className="flex  items-center ">
-        <span className="mr-2 text-2xl text-blue-500">{selectedItem.icon}</span>
+      <div className="flex items-center">
+        <EmojiPicker icon={icon} onChange={onIconChange} />
         {isEditing ? (
           <input
             type="text"
