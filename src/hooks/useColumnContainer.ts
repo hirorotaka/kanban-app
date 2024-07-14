@@ -4,18 +4,17 @@ import * as z from 'zod';
 import { useColumnContainerProps } from '../types/type';
 import { useEffect, useState } from 'react';
 
-const varidationMaxlength = 15;
+const validationMaxLength = 15;
 
-// バリデーションスキーマの定義
 const validationSchema = z.object({
   label: z
     .string()
-    .min(1, `1~${varidationMaxlength}文字以内で入力してください`)
-    .max(
-      varidationMaxlength,
-      `1~${varidationMaxlength}文字以内で入力してください`
-    )
-    .refine((value) => value.trim().length > 0, '空白文字のみは入力できません'),
+    .transform((value) => value.trim()) // 先頭と末尾の空白を除去
+    .refine((value) => value.length > 0, '空白文字のみは入力できません')
+    .refine(
+      (value) => value.length <= validationMaxLength,
+      `1~${validationMaxLength}文字以内で入力してください`
+    ),
 });
 
 // バリデーションスキーマから型を推論
@@ -37,27 +36,10 @@ export const useColumnContainer = ({
     clearErrors,
     getValues,
     trigger,
-    watch,
   } = useForm<FormValues>({
     defaultValues: { label: column?.title || '' },
     resolver: zodResolver(validationSchema),
-    mode: 'onChange',
   });
-
-  useEffect(() => {
-    const subscription = watch((value, { name }) => {
-      if (
-        name === 'label' &&
-        value.label &&
-        value.label.length >= varidationMaxlength
-      ) {
-        setValue('label', value.label.slice(0, varidationMaxlength));
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, [watch, setValue]);
-
-  const inputId = column?.id || '';
 
   useEffect(() => {
     if (column) {
@@ -98,7 +80,6 @@ export const useColumnContainer = ({
     column,
     editMode,
     setEditMode,
-    inputId,
     errors,
     isValid,
     register,

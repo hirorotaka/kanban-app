@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { TaskProps } from '../../types/type';
 import { IoApps, IoPencil, IoTrashOutline } from 'react-icons/io5';
 import { useSortable } from '@dnd-kit/sortable';
@@ -12,7 +12,6 @@ export const CardTask = ({ task, newTaskId }: TaskProps) => {
   const [prevContent, setPrevContent] = useState(task.content);
   const [isGrabbing, setIsGrabbing] = useState(false);
   const [mouseIsOver, setMouseIsOver] = useState(false);
-  const [highlighted, setHighlighted] = useState(false);
 
   // @dnd-kit/sortableを使用してタスクのドラッグ&ドロップ機能を実装
   const {
@@ -52,15 +51,19 @@ export const CardTask = ({ task, newTaskId }: TaskProps) => {
     }
   };
 
-  // 新しいタスクが追加されたときにハイライトする
   useEffect(() => {
-    if (newTaskId === task.id) {
-      setHighlighted(true);
+    if (newTaskId?.id === task.id && newTaskId.isNewTask) {
+      setEditMode(true);
     }
-    return () => {
-      setHighlighted(false);
-    };
   }, [newTaskId]);
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (editMode && textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  }, [editMode]);
 
   // タスクがドラッグ中の場合、プレースホルダーを表示
   if (isDragging) {
@@ -77,7 +80,7 @@ export const CardTask = ({ task, newTaskId }: TaskProps) => {
     <div
       ref={setNodeRef}
       style={style}
-      className={`mb-1 rounded-xl border-2 bg-blue-100 p-1 pb-3 shadow-lg ${editMode ? '' : 'hover:border-blue-500'} ${highlighted ? 'animate-highlight' : 'border-transparent'}`}
+      className={`mb-1 rounded-xl border-2 bg-blue-100 p-1 pb-3 shadow-lg ${editMode ? '' : 'hover:border-blue-500'} `}
       onMouseEnter={() => setMouseIsOver(true)}
       onMouseLeave={() => setMouseIsOver(false)}
     >
@@ -126,6 +129,7 @@ export const CardTask = ({ task, newTaskId }: TaskProps) => {
               </p>
             ) : (
               <textarea
+                ref={textareaRef}
                 className="w-full resize-none whitespace-pre-wrap break-words rounded border-2 py-1 text-base outline-none focus:border-blue-500"
                 value={task.content}
                 onChange={(e) => {

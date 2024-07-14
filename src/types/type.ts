@@ -62,7 +62,10 @@ export type ColumnContainerProps = {
 
 export type TaskProps = {
   task: Task;
-  newTaskId?: string | null;
+  newTaskId?: {
+    id: string;
+    isNewTask: boolean;
+  } | null;
 };
 
 export type NavItemProps = {

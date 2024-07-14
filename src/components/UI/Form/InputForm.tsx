@@ -29,7 +29,7 @@ export const InputForm = ({
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="relative grow">
           <input
-            className="w-full rounded border-2 bg-blue-50 py-2 pl-4 pr-24 font-bold text-black shadow-2xl outline-none focus:border-blue-500"
+            className="w-full rounded border-none bg-blue-50 py-2 pl-4 pr-24 font-bold text-black shadow-2xl outline-none "
             {...register('label', { onChange: () => trigger('label') })}
             autoFocus
             onBlur={handleTextareaChange}
