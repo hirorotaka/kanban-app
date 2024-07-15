@@ -8,7 +8,6 @@ export const EmojiPicker = ({ icon, onChange }: EmojiPickerProps) => {
   const [isShowPicker, setIsShowPicker] = useState<boolean>(false);
 
   const selectEmoji = (e: EmojiSelectEvent) => {
-    console.log(e);
     const emojiCode = e.unified.split('-');
     const codesArray: number[] = emojiCode.map((el) => parseInt(el, 16));
     const emoji = String.fromCodePoint(...codesArray);
