@@ -11,6 +11,7 @@ export type Column = {
   id: string;
   title: string;
   navItemId: string;
+  bgColor: string;
 };
 
 export type Task = {
@@ -42,7 +43,7 @@ export type BoardContextValues = {
     filterColumns: Column[];
     setColumns: React.Dispatch<React.SetStateAction<Column[]>>;
     createNewColumn: (columnId: string) => void;
-    updateColumn: (id: string, title: string) => void;
+    updateColumn: (id: string, updates: Partial<Column>) => void;
     deleteColumn: (id: string) => void;
     columnsIds: (UniqueIdentifier | { id: UniqueIdentifier })[];
   };
@@ -87,7 +88,7 @@ export type ErrorMessageProps = {
 
 export type useColumnContainerProps = {
   column: Column;
-  updateColumn: (id: string, title: string) => void;
+  updateColumn: (id: string, updates: Partial<Column>) => void;
 };
 
 export type EmojiPickerProps = {
@@ -97,4 +98,13 @@ export type EmojiPickerProps = {
 
 export type EmojiSelectEvent = {
   unified: string;
+};
+
+export type DropdownMenuProps = {
+  selectedColor: string;
+  setSelectedColor: (color: string) => void;
+  deleteColumn: (columnId: string) => void;
+  updateColumn: (id: string, updates: Partial<Column>) => void;
+  columnId: string;
+  handleEditTitleClick: () => void;
 };

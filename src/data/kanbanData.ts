@@ -5,21 +5,25 @@ export const defaultColumns: Column[] = [
     id: 'Todo',
     title: 'Todo',
     navItemId: '5033751',
+    bgColor: 'bg-red-500',
   },
   {
     id: 'Doing',
     title: 'Doing',
     navItemId: '5033751',
+    bgColor: 'bg-blue-500',
   },
   {
     id: 'Done',
     title: 'Done',
     navItemId: '5033751',
+    bgColor: 'bg-green-500',
   },
   {
-    id: 'Todo',
-    title: 'Todo',
+    id: 'Todo1',
+    title: 'Todo1',
     navItemId: '5033752',
+    bgColor: 'bg-green-500',
   },
 ];
 

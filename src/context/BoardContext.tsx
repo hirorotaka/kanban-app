@@ -33,16 +33,17 @@ export const BoardProvider = ({ children }: ContextProviderProps) => {
   const createNewColumn = (boarId: string) => {
     const newColumn: Column = {
       id: `${generateId()}-${columns.length + 1}`,
-      title: `新しいカラム ${columns.length + 1}`,
+      title: `新しいグループ ${columns.length + 1}`,
       navItemId: boarId,
+      bgColor: 'bg-gradient-to-r from-blue-500 to-indigo-500',
     };
     setColumns([...columns, newColumn]);
   };
 
-  const updateColumn = (id: string, title: string) => {
+  const updateColumn = (id: string, updates: Partial<Column>) => {
     const newColumns: Column[] = columns.map((col) => {
       if (col.id !== id) return col;
-      return { ...col, title };
+      return { ...col, ...updates };
     });
 
     setColumns(newColumns);

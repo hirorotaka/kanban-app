@@ -50,7 +50,7 @@ export const useColumnContainer = ({
 
   const handleUpdateColumn = (label: string) => {
     if (!updateColumn || !column) return;
-    updateColumn(column.id, label);
+    updateColumn(column.id, { title: label });
     setPrevLabel(label);
   };
 
@@ -71,7 +71,7 @@ export const useColumnContainer = ({
     clearErrors('label');
   };
 
-  const handleClick = () => {
+  const handleEditTitleClick = () => {
     setEditMode(true);
     clearErrors('label');
   };
@@ -87,6 +87,6 @@ export const useColumnContainer = ({
     handleSubmit,
     onSubmit,
     handleTextareaChange,
-    handleClick,
+    handleEditTitleClick,
   };
 };
