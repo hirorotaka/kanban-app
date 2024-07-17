@@ -4,6 +4,7 @@ import { IoApps, IoPencil, IoTrashOutline } from 'react-icons/io5';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { BoardContext } from '../../context/BoardContext';
+import { TagInput } from '../UI/Input/TagInput';
 
 export const CardTask = ({ task, newTaskId, setNewTaskId }: TaskProps) => {
   const { deleteTask, updateTask } = useContext(BoardContext)?.task || {};
@@ -63,6 +64,10 @@ export const CardTask = ({ task, newTaskId, setNewTaskId }: TaskProps) => {
   useEffect(() => {
     if (editMode && textareaRef.current) {
       textareaRef.current.focus();
+      textareaRef.current.setSelectionRange(
+        task.content.length,
+        task.content.length
+      );
     }
   }, [editMode]);
 
@@ -130,6 +135,7 @@ export const CardTask = ({ task, newTaskId, setNewTaskId }: TaskProps) => {
               </p>
             ) : (
               <textarea
+                placeholder="空白のときは、元の内容に戻ります"
                 ref={textareaRef}
                 className="w-full resize-none whitespace-pre-wrap break-words rounded border-2 py-1 text-base outline-none focus:border-blue-500"
                 value={task.content}
@@ -137,7 +143,6 @@ export const CardTask = ({ task, newTaskId, setNewTaskId }: TaskProps) => {
                   if (!updateTask) return;
                   updateTask(task.id, e.target.value);
                 }}
-                autoFocus
                 onBlur={() => {
                   handleUpdateTask(task.content);
                   setEditMode(false);
@@ -154,6 +159,9 @@ export const CardTask = ({ task, newTaskId, setNewTaskId }: TaskProps) => {
               />
             )}
           </div>
+        </div>
+        <div className="w-4/5">
+          <TagInput />
         </div>
       </div>
     </div>
