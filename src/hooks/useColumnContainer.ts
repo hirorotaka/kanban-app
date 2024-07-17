@@ -10,7 +10,10 @@ const validationSchema = z.object({
   label: z
     .string()
     .transform((value) => value.trim()) // 先頭と末尾の空白を除去
-    .refine((value) => value.length > 0, '空白文字のみは入力できません')
+    .refine(
+      (value) => value.length > 0,
+      '空白のみは入力はできません。空白で入力フォームから外れたら元の値に戻ります。'
+    )
     .refine(
       (value) => value.length <= validationMaxLength,
       `1~${validationMaxLength}文字以内で入力してください`
