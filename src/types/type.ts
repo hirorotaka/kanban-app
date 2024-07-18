@@ -120,12 +120,53 @@ export type Tag = {
   name: string;
   taskId: string;
   bgColor: string;
-  ref?: HTMLDivElement;
+  tagListId: string;
 };
 
 export type TagList = {
   id: string;
   name: string;
   bgColor: string;
-  ref?: React.RefObject<HTMLDivElement>;
+};
+
+export type TagInputProps = {
+  filteredTags: Tag[] | undefined;
+  taskId: string;
+  isTagEdit: boolean;
+  setIsTagEdit: (value: boolean) => void;
+};
+
+export type TagInputCloseProps = {
+  closePopover: () => void;
+};
+
+export type TagInputFieldProps = {
+  inputValue: string;
+  handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleInputKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+};
+
+export type TagInputListProps = {
+  tags: Tag[];
+  handleTagDelete: (id: string) => void;
+};
+
+export type TagInputSelectListProps = {
+  tagList: TagList[];
+  isTagSelected: (tag: TagList) => boolean;
+  handleTagListClick: (tag: TagList) => void;
+  handleTagEdit: (id: string) => void;
+  popoverId: string | null;
+  hoveredTagId: string | null;
+  setHoveredTagId: React.Dispatch<React.SetStateAction<string | null>>;
+  tagRefs: React.MutableRefObject<{ [key: string]: HTMLDivElement | null }>;
+};
+
+export type TagEditorProps = {
+  editingTag: TagList;
+  handleEditSubmit: (e: React.FormEvent) => void;
+  handleColorChange: (value: string) => void;
+  handleTagListDelete: (id: string) => void;
+  handleEditChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleTagEditorCancel: () => void;
 };

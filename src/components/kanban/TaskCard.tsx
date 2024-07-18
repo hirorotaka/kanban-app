@@ -4,7 +4,8 @@ import { IoApps, IoPencil, IoTrashOutline } from 'react-icons/io5';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { BoardContext } from '../../context/BoardContext';
-import { TagInput } from '../UI/Input/TagInput';
+import { TagInput } from '../UI/Tag/TagInput';
+import { TagShow } from '../UI/Tag/TagShow';
 
 export const CardTask = ({ task, newTaskId, setNewTaskId }: TaskProps) => {
   const { deleteTask, updateTask } = useContext(BoardContext)?.task || {};
@@ -14,6 +15,7 @@ export const CardTask = ({ task, newTaskId, setNewTaskId }: TaskProps) => {
   const [prevContent, setPrevContent] = useState(task.content);
   const [isGrabbing, setIsGrabbing] = useState(false);
   const [mouseIsOver, setMouseIsOver] = useState(false);
+  const [isTagEdit, setIsTagEdit] = useState(false);
 
   // @dnd-kit/sortableを使用してタスクのドラッグ&ドロップ機能を実装
   const {
@@ -71,6 +73,9 @@ export const CardTask = ({ task, newTaskId, setNewTaskId }: TaskProps) => {
       );
     }
   }, [editMode]);
+
+  // タスクにひもついているタグを表示する
+  const filteredTags = allTags?.filter((tag) => tag.taskId === task.id);
 
   // タスクがドラッグ中の場合、プレースホルダーを表示
   if (isDragging) {
@@ -161,11 +166,18 @@ export const CardTask = ({ task, newTaskId, setNewTaskId }: TaskProps) => {
             )}
           </div>
         </div>
-        <div className="w-4/5">
-          <TagInput
-            filteredTags={allTags?.filter((tag) => tag.taskId === task.id)}
-            taskId={task.id}
-          />
+        <div className="w-full  p-2">
+          {/* タスクのタグ表示・編集機能 */}
+          {isTagEdit ? (
+            <TagInput
+              filteredTags={filteredTags}
+              taskId={task.id}
+              isTagEdit={isTagEdit}
+              setIsTagEdit={setIsTagEdit}
+            />
+          ) : (
+            <TagShow filteredTags={filteredTags} setIsTagEdit={setIsTagEdit} />
+          )}
         </div>
       </div>
     </div>
