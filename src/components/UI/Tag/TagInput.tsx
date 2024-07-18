@@ -7,6 +7,7 @@ import { TagInputClose } from './TagInputClose';
 import { TagInputList } from './TagInputList';
 import { TagInputField } from './TagInputField';
 import { TagInputSelectList } from './TagInputSelectList';
+import { DeleteConfirmationModal } from '../Modal/DeleteConfirmationModal';
 
 export const TagInput = ({
   filteredTags = [],
@@ -28,6 +29,8 @@ export const TagInput = ({
   const [popoverPosition, setPopoverPosition] = useState({ top: 0, left: 0 }); // ポップオーバーの位置
   const [editingTag, setEditingTag] = useState<TagList | null>(null); // 編集中のタグ情報
   const [hoveredTagId, setHoveredTagId] = useState<string | null>(null); // ホバー中のタグID
+  const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
+  const [tagToDelete, setTagToDelete] = useState<string | null>(null);
 
   // refの設定
   const popoverRef = useRef<HTMLDivElement>(null); // タグ編集ポップオーバーの参照
@@ -37,6 +40,11 @@ export const TagInput = ({
   // ポップオーバー外クリック時の処理
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      // モーダルが開いている場合は何もしない
+      if (deleteConfirmationOpen) {
+        return;
+      }
+
       // ポップオーバーの外側をクリックした場合、ポップオーバーを閉じる
       if (
         popoverRef.current &&
@@ -49,11 +57,16 @@ export const TagInput = ({
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [popoverId]);
+  }, [popoverId, deleteConfirmationOpen]);
 
   // タグ入力フィールド外クリック時の処理
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      // モーダルが開いている場合は何もしない
+      if (deleteConfirmationOpen) {
+        return;
+      }
+
       // タグ入力フィールドの外側をクリックした場合、タグ編集モードを終了
       if (
         tagInputRef.current &&
@@ -66,7 +79,7 @@ export const TagInput = ({
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isTagEdit]);
+  }, [isTagEdit, deleteConfirmationOpen]);
 
   // ポップオーバーを閉じる処理
   const closePopover = () => {
@@ -191,11 +204,20 @@ export const TagInput = ({
 
   // タグ一覧削除処理
   const handleTagListDelete = (id: string) => {
-    setTagList(tagList.filter((tag) => tag.id !== id)); // タグ一覧から指定のタグを削除
-    setTags(tags.filter((tag) => tag.tagListId !== id)); // タスクのタグ一覧から指定のタグを削除
-    setAllTags(allTags.filter((tag) => tag.tagListId !== id)); // 全てのタグ一覧から指定のタグを削除
-    setPopoverId(null); // ポップオーバーIDをリセット
-    setEditingTag(null); // 編集中のタグ情報をリセット
+    setTagToDelete(id);
+    setDeleteConfirmationOpen(true);
+  };
+
+  const handleDeleteConfirmation = () => {
+    if (tagToDelete) {
+      setTagList(tagList.filter((tag) => tag.id !== tagToDelete));
+      setTags(tags.filter((tag) => tag.tagListId !== tagToDelete));
+      setAllTags(allTags.filter((tag) => tag.tagListId !== tagToDelete));
+      setPopoverId(null);
+      setEditingTag(null);
+    }
+    setDeleteConfirmationOpen(false);
+    setTagToDelete(null);
   };
 
   const handleEditSubmit = (e: React.FormEvent) => {
@@ -290,6 +312,12 @@ export const TagInput = ({
           />
         </div>
       )}
+
+      <DeleteConfirmationModal
+        isOpen={deleteConfirmationOpen}
+        onConfirm={handleDeleteConfirmation}
+        onCancel={() => setDeleteConfirmationOpen(false)}
+      />
     </div>
   );
 };

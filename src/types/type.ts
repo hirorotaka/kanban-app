@@ -170,3 +170,9 @@ export type TagEditorProps = {
   handleEditChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleTagEditorCancel: () => void;
 };
+
+export type DeleteConfirmationModalProps = {
+  isOpen: boolean;
+  onConfirm: () => void;
+  onCancel: () => void;
+};
