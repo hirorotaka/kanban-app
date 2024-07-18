@@ -1,4 +1,4 @@
-import { IoTrash } from 'react-icons/io5';
+import { IoClose, IoTrash } from 'react-icons/io5';
 import { TagColorList } from '../../../data/ColorList';
 import { TagEditorProps } from '../../../types/type';
 
@@ -12,6 +12,17 @@ export const TagEditor = ({
 }: TagEditorProps) => {
   return (
     <form onSubmit={handleEditSubmit} className="px-4 py-2">
+      <div className="flex justify-end">
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleTagEditorCancel();
+          }}
+          className="text-gray-300 hover:text-gray-600 focus:outline-none"
+        >
+          <IoClose size={20} />
+        </button>
+      </div>
       <h3 className="text-sm font-medium text-gray-900">タグ編集</h3>
       <input
         autoFocus
@@ -45,13 +56,6 @@ export const TagEditor = ({
           削除
         </button>
         <div className="space-x-2">
-          <button
-            type="button"
-            onClick={handleTagEditorCancel}
-            className="rounded bg-gray-200 px-2 py-1 text-xs text-gray-800 hover:bg-gray-300"
-          >
-            キャンセル
-          </button>
           <button
             type="submit"
             className="rounded bg-blue-500 px-2 py-1 text-xs text-white hover:bg-blue-600"

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { GoKebabHorizontal } from 'react-icons/go';
-import { IoPencil, IoTrashOutline } from 'react-icons/io5';
+import { IoClose, IoPencil, IoTrashOutline } from 'react-icons/io5';
 import { gradientColors } from '../../../data/ColorList';
 import { DropdownMenuProps } from '../../../types/type';
 
@@ -70,6 +70,17 @@ export const DropdownMenu = ({
       >
         {isOpen && (
           <div className="py-1">
+            <div className="flex justify-end">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  closePopover();
+                }}
+                className="text-gray-300 hover:text-gray-600 focus:outline-none"
+              >
+                <IoClose size={20} />
+              </button>
+            </div>
             <button
               onClick={handleEditFormFadeIn}
               className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-300"
