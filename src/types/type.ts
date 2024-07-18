@@ -176,3 +176,8 @@ export type DeleteConfirmationModalProps = {
   onConfirm: () => void;
   onCancel: () => void;
 };
+
+export type TagShowProps = {
+  filteredTags: Tag[];
+  setIsTagEdit: React.Dispatch<React.SetStateAction<boolean>>;
+};

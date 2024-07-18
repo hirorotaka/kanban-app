@@ -75,7 +75,7 @@ export const CardTask = ({ task, newTaskId, setNewTaskId }: TaskProps) => {
   }, [editMode]);
 
   // タスクにひもついているタグを表示する
-  const filteredTags = allTags?.filter((tag) => tag.taskId === task.id);
+  const filteredTags = allTags?.filter((tag) => tag.taskId === task.id) || [];
 
   // タスクがドラッグ中の場合、プレースホルダーを表示
   if (isDragging) {

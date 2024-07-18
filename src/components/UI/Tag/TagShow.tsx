@@ -1,10 +1,12 @@
-export const TagShow = ({ filteredTags, setIsTagEdit }) => {
+import { TagShowProps } from '../../../types/type';
+
+export const TagShow = ({ filteredTags, setIsTagEdit }: TagShowProps) => {
   return filteredTags.length > 0 ? (
     <div onClick={() => setIsTagEdit(true)} className="flex flex-wrap gap-2">
-      {filteredTags?.map((tag) => (
+      {filteredTags.map((tag) => (
         <div
           key={tag.id}
-          className={`flex cursor-pointer items-center rounded-md p-1 text-xs font-bold text-gray-800 ${tag.bgColor}`}
+          className={`flex cursor-pointer items-center rounded-md p-1 text-xs font-bold text-gray-800 ${tag.bgColor} hover:opacity-70`}
         >
           <span>{tag.name}</span>
         </div>
