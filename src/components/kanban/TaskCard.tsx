@@ -83,7 +83,7 @@ export const CardTask = ({ task, newTaskId, setNewTaskId }: TaskProps) => {
       <div
         ref={setNodeRef}
         style={style}
-        className="relative flex min-h-[120px] cursor-grab items-center rounded-xl border-2 border-blue-500 bg-white p-2.5 text-left shadow-xl"
+        className="relative flex min-h-[120px] cursor-grab items-center rounded-xl border-2 border-blue-200 bg-white p-2.5 text-left shadow-xl"
       />
     );
   }
@@ -92,7 +92,7 @@ export const CardTask = ({ task, newTaskId, setNewTaskId }: TaskProps) => {
     <div
       ref={setNodeRef}
       style={style}
-      className={`mb-1 rounded-xl border-2 bg-blue-100 p-1 pb-3 shadow-lg ${editMode ? '' : 'hover:border-blue-500'} `}
+      className={`mb-1 rounded-xl border-2 bg-blue-50 p-1 pb-3 shadow-lg ${editMode ? '' : 'hover:border-blue-200'} `}
       onMouseEnter={() => setMouseIsOver(true)}
       onMouseLeave={() => setMouseIsOver(false)}
     >
@@ -114,7 +114,7 @@ export const CardTask = ({ task, newTaskId, setNewTaskId }: TaskProps) => {
           <div className={`flex ${!mouseIsOver && !editMode && 'hidden'}`}>
             <button
               onClick={handleEditMode}
-              className={`rounded px-1 py-2 text-gray-500 transition duration-200 ease-in-out hover:text-red-500`}
+              className={`rounded px-1 py-2 text-gray-400 transition duration-200 ease-in-out hover:text-gray-800`}
             >
               <IoPencil size={18} />
             </button>
@@ -123,7 +123,7 @@ export const CardTask = ({ task, newTaskId, setNewTaskId }: TaskProps) => {
                 if (!deleteTask) return;
                 deleteTask(task.id);
               }}
-              className={`rounded px-1 py-2 text-gray-500 transition duration-200 ease-in-out hover:text-red-500`}
+              className={`rounded px-1 py-2 text-gray-400 transition duration-200 ease-in-out hover:text-red-500`}
             >
               <IoTrashOutline size={18} />
             </button>

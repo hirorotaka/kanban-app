@@ -41,7 +41,7 @@ export const TagInputSelectList = ({
               handleTagEdit(tag.id);
             }}
             size={20}
-            className="cursor-pointer text-gray-800"
+            className="cursor-pointer text-gray-800 hover:opacity-60"
           />
         )}
       </div>

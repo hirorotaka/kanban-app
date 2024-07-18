@@ -83,14 +83,14 @@ export const DropdownMenu = ({
             </div>
             <button
               onClick={handleEditFormFadeIn}
-              className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-300"
+              className="flex w-full items-center px-4 py-2 text-sm text-black hover:bg-gray-300"
             >
               <IoPencil className="mr-3 size-5" />
               タイトルを編集
             </button>
             <button
               onClick={handleDeleteColumn}
-              className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-300"
+              className="flex w-full items-center px-4 py-2 text-sm text-black  hover:bg-red-400 hover:text-white"
             >
               <IoTrashOutline className="mr-3 size-5" />
               グループを削除

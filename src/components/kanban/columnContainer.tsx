@@ -169,7 +169,7 @@ export const ColumnContainer = ({
       {/* タスク追加ボタンの表示 */}
       <div className="my-4 flex justify-center">
         <button
-          className="flex cursor-pointer items-center justify-center rounded-lg bg-gradient-to-r from-blue-500 to-indigo-500 p-2 text-white transition duration-200 hover:from-blue-600 hover:to-indigo-600 hover:opacity-80"
+          className="wave-effect flex cursor-pointer items-center justify-center rounded-lg bg-gradient-to-r from-blue-500 to-indigo-500 p-2 text-white transition duration-200"
           onClick={() => {
             if (!createTask) return;
             const newTask: Task = createTask(column.id);

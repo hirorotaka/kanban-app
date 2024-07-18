@@ -15,7 +15,7 @@ export const NavItem = ({ id, icon, label }: NavItemProps) => {
 
   return (
     <div
-      className={`flex items-center justify-between rounded-md transition-colors duration-200 ${
+      className={`wave-effect flex items-center justify-between rounded-md transition duration-100 ease-in-out ${
         navCheckId === id
           ? 'bg-blue-400 font-bold text-white'
           : 'text-gray-700 hover:bg-gray-200'
