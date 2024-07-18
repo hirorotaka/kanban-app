@@ -60,7 +60,7 @@ export const DropdownMenu = ({
         className="inline-flex w-full justify-center rounded-md px-2 py-1 text-sm font-medium text-white focus:outline-none"
         onClick={togglePopover}
       >
-        <GoKebabHorizontal className="size-8" />
+        <GoKebabHorizontal className="size-8 hover:opacity-60" />
       </button>
 
       <div
