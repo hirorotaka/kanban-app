@@ -3,9 +3,15 @@ import {
   BoardContextValues,
   Column,
   ContextProviderProps,
+  Tag,
+  TagList,
   Task,
 } from '../types/type';
-import { defaultColumns, defaultTasks } from '../data/kanbanData';
+import {
+  defaultColumns,
+  defaultTasks,
+  initialTagList,
+} from '../data/kanbanData';
 import { generateId } from '../utils/utils';
 import { NavItemContext } from './NavItemContext';
 import { UniqueIdentifier } from '@dnd-kit/core';
@@ -81,6 +87,11 @@ export const BoardProvider = ({ children }: ContextProviderProps) => {
   };
   // タスクのCRUD ここまで
 
+  // タグとタグリストの管理
+  const [allTags, setAllTags] = useState<Tag[]>([]);
+  const [tagList, setTagList] = useState<TagList[]>(initialTagList);
+  // タグ
+
   // 絞り込みされたカラムを取得
   const filterColumns = useMemo(
     () => columns.filter((col) => col.navItemId === navCheckId),
@@ -104,6 +115,12 @@ export const BoardProvider = ({ children }: ContextProviderProps) => {
       deleteTask,
       updateTask,
       tasksIds,
+    },
+    tag: {
+      allTags,
+      setAllTags,
+      tagList,
+      setTagList,
     },
   };
 

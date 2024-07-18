@@ -1,4 +1,4 @@
-import { Column, Task } from '../types/type';
+import { Column, TagList, Task } from '../types/type';
 
 export const defaultColumns: Column[] = [
   {
@@ -29,78 +29,107 @@ export const defaultColumns: Column[] = [
 
 export const defaultTasks: Task[] = [
   {
-    id: 1,
+    id: '1',
     columnId: 'Todo',
     content: '会議の準備',
   },
   {
-    id: 2,
+    id: '2',
     columnId: 'Todo',
     content: 'プレゼンテーションの作成',
   },
   {
-    id: 3,
+    id: '3',
     columnId: 'Todo',
     content: 'メールの返信',
   },
   {
-    id: 4,
+    id: '4',
     columnId: 'Todo',
     content: '買い物リストの作成',
   },
   {
-    id: 5,
+    id: '5',
     columnId: 'Todo',
     content: '歯医者の予約',
   },
   {
-    id: 6,
+    id: '6',
     columnId: 'Doing',
     content: 'プロジェクト計画の立案',
   },
   {
-    id: 7,
+    id: '7',
     columnId: 'Doing',
     content: 'コードのデバッグ',
   },
   {
-    id: 8,
+    id: '8',
     columnId: 'Done',
     content: 'レポートの作成',
   },
   {
-    id: 9,
+    id: '9',
     columnId: 'Done',
     content: '新しい技術の学習',
   },
   {
-    id: 10,
+    id: '10',
     columnId: 'Done',
     content: 'チームミーティングの実施',
   },
   {
-    id: 11,
+    id: '11',
     columnId: 'Done',
     content: 'バグの修正',
   },
   {
-    id: 12,
+    id: '12',
     columnId: 'Done',
     content: 'クライアントとの電話会議',
   },
   {
-    id: 13,
+    id: '13',
     columnId: 'Done',
     content: 'ドキュメントの更新',
   },
   {
-    id: 14,
+    id: '14',
     columnId: 'Done',
     content: '週次レポートの提出',
   },
   {
-    id: 15,
+    id: '15',
     columnId: 'Done',
     content: 'オフィス用品の注文',
+  },
+];
+
+export const initialTagList: TagList[] = [
+  {
+    id: '1',
+    name: '重要',
+    bgColor: 'bg-yellow-200',
+  },
+  {
+    id: '2',
+    name: '学習',
+    bgColor: 'bg-orange-200',
+  },
+  { id: '3', name: '勉強', bgColor: 'bg-teal-200' },
+  {
+    id: '4',
+    name: '緊急度 高',
+    bgColor: 'bg-red-200',
+  },
+  {
+    id: '5',
+    name: '緊急度 中',
+    bgColor: 'bg-amber-200',
+  },
+  {
+    id: '6',
+    name: '緊急度 低',
+    bgColor: 'bg-sky-200',
   },
 ];

@@ -1,81 +1,35 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { IoClose, IoEllipsisHorizontalSharp, IoTrash } from 'react-icons/io5';
 import { generateId } from '../../../utils/utils';
+import { BoardContext } from '../../../context/BoardContext';
+import { Tag, TagList } from '../../../types/type';
+import { TagColorList } from '../../../data/ColorList';
 
-type Tag = {
-  id: string;
-  name: string;
+type TagInputProps = {
+  filteredTags: Tag[] | undefined;
   taskId: string;
-  bgColor: string;
-  ref?: HTMLDivElement;
 };
 
-const initialTagList: Tag[] = [
-  {
-    id: '1',
-    name: '重要',
-    taskId: '',
-    bgColor: 'bg-yellow-200',
-  },
-  {
-    id: '2',
-    name: '学習',
-    taskId: '',
-    bgColor: 'bg-orange-200',
-  },
-  { id: '3', name: '勉強', taskId: '', bgColor: 'bg-teal-200' },
-  {
-    id: '4',
-    name: '緊急度 高',
-    taskId: '',
-    bgColor: 'bg-red-200',
-  },
-  {
-    id: '5',
-    name: '緊急度 中',
-    taskId: '',
-    bgColor: 'bg-amber-200',
-  },
-  {
-    id: '6',
-    name: '緊急度 低',
-    taskId: '',
-    bgColor: 'bg-sky-200',
-  },
-];
+export const TagInput = ({ filteredTags = [], taskId }: TagInputProps) => {
+  const { allTags, setAllTags, tagList, setTagList } =
+    useContext(BoardContext)?.tag || {};
 
-const colorOptions = [
-  'bg-red-200',
-  'bg-yellow-200',
-  'bg-green-200',
-  'bg-blue-200',
-  'bg-indigo-200',
-  'bg-purple-200',
-  'bg-pink-200',
-  'bg-amber-200',
-  'bg-sky-200',
-  'bg-teal-200',
-  'bg-orange-200',
-  'bg-rose-200',
-  'bg-violet-200',
-  'bg-lime-200',
-];
+  if (!allTags || !setAllTags || !tagList || !setTagList) {
+    throw new Error('allTags or setAllTags is not defined');
+  }
 
-export const TagInput = () => {
   // タグ
-  const [tags, setTags] = useState<Tag[]>([]);
-
-  // タグ一覧
-  const [tagList, setTagList] = useState<Tag[]>(initialTagList);
+  const [tags, setTags] = useState<Tag[]>(filteredTags || []);
   const [inputValue, setInputValue] = useState('');
   const [isEdit, setIsEdit] = useState(false);
   const [popoverId, setPopoverId] = useState<string | null>(null);
   const [popoverPosition, setPopoverPosition] = useState({ top: 0, left: 0 });
-  const [editingTag, setEditingTag] = useState<Tag | null>(null);
+  const [editingTag, setEditingTag] = useState<TagList | null>(null);
   const [hoveredTagId, setHoveredTagId] = useState<string | null>(null);
 
   const popoverRef = useRef<HTMLDivElement>(null);
   const tagInputRef = useRef<HTMLDivElement>(null);
+  const tagRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -128,11 +82,19 @@ export const TagInput = () => {
         const newTag: Tag = {
           id: generateId(),
           name: newTagName,
-          taskId: '',
+          taskId,
           bgColor: 'bg-blue-300',
         };
+
+        const newTagList = {
+          id: generateId(),
+          name: newTagName,
+          bgColor: 'bg-blue-300',
+        };
+
         setTags([...tags, newTag]);
-        setTagList([newTag, ...tagList]); // 新しいタグを先頭に追加
+        setAllTags([...allTags, newTag]);
+        setTagList([newTagList, ...tagList]); // 新しいタグを先頭に追加
         setInputValue('');
       }
     }
@@ -141,16 +103,25 @@ export const TagInput = () => {
   const handleTagDelete = (id: string) => {
     const newTags = tags.filter((tag) => tag.id !== id);
     setTags(newTags);
+    setAllTags([...allTags.filter((tag) => tag.id !== id)]);
   };
 
-  const handleTagListClick = (tag: Tag) => {
+  const handleTagListClick = (tag: TagList) => {
     if (!tags.find((t) => t.id === tag.id)) {
-      setTags([...tags, tag]);
+      const newTag: Tag = {
+        id: generateId(),
+        name: tag.name,
+        taskId,
+        bgColor: tag.bgColor,
+      };
+
+      setTags([...tags, newTag]);
+      setAllTags([...allTags, newTag]);
     }
   };
 
-  const isTagSelected = (tag: Tag) => {
-    return tags.some((t) => t.id === tag.id);
+  const isTagSelected = (tag: TagList) => {
+    return tags.some((t) => t.name === tag.name);
   };
 
   const handleTagEdit = (id: string) => {
@@ -180,10 +151,17 @@ export const TagInput = () => {
         )
       );
 
+      // Update allTags
+      setAllTags(
+        allTags.map((tag) =>
+          tag.name === updatedEditingTag.name ? { ...tag, bgColor: color } : tag
+        )
+      );
+
       // Update tags
       setTags(
         tags.map((tag) =>
-          tag.id === updatedEditingTag.id ? updatedEditingTag : tag
+          tag.name === updatedEditingTag.name ? { ...tag, bgColor: color } : tag
         )
       );
     }
@@ -197,18 +175,15 @@ export const TagInput = () => {
   };
 
   const handleEditSubmit = (e: React.FormEvent) => {
+    console.log(editingTag);
+    console.log(tags);
     e.preventDefault();
     if (editingTag) {
+      // Update tagList
       const updatedTagList = tagList.map((tag) =>
         tag.id === editingTag.id ? editingTag : tag
       );
       setTagList(updatedTagList);
-
-      // Update the tag in the tags state
-      const updatedTags = tags.map((tag) =>
-        tag.id === editingTag.id ? editingTag : tag
-      );
-      setTags(updatedTags);
 
       setEditingTag(null);
       setPopoverId(null);
@@ -218,15 +193,17 @@ export const TagInput = () => {
   const handlePopoverClose = () => {
     setPopoverId(null);
   };
-
   const calculatePopoverPosition = (tagId: string) => {
-    const tagRef = tagList.find((tag) => tag.id === tagId)?.ref;
+    const tagRef = tagRefs.current[tagId];
+    console.log(tagRef);
     if (tagRef) {
       const { top, right } = tagRef.getBoundingClientRect();
       return { top, left: right };
     }
     return { top: 0, left: 0 };
   };
+
+  console.log(tagRefs.current);
 
   const renderPopover = () => {
     if (!popoverId || !editingTag) return null;
@@ -249,7 +226,7 @@ export const TagInput = () => {
           <div className="mt-2">
             <p className="text-sm text-gray-600">色を選択:</p>
             <div className="mt-1 flex flex-wrap gap-1">
-              {colorOptions.map((color) => (
+              {TagColorList.map((color) => (
                 <button
                   key={color}
                   type="button"
@@ -352,6 +329,7 @@ export const TagInput = () => {
                 {tagList.map((tag) => (
                   <div
                     key={tag.id}
+                    ref={(el) => (tagRefs.current[tag.id] = el)}
                     className="flex items-center justify-between hover:bg-gray-200"
                     onMouseEnter={() => setHoveredTagId(tag.id)}
                     onMouseLeave={() => setHoveredTagId(null)}
@@ -371,7 +349,7 @@ export const TagInput = () => {
                         {tag.name}
                       </span>
                     </div>
-                    <div className="relative" ref={(ref) => (tag.ref = ref)}>
+                    <div>
                       {(hoveredTagId === tag.id || popoverId === tag.id) && (
                         <IoEllipsisHorizontalSharp
                           onClick={(e) => {
@@ -389,9 +367,9 @@ export const TagInput = () => {
             )}
           </div>
         </div>
-      ) : tags.length > 0 ? (
+      ) : filteredTags.length > 0 ? (
         <div className="flex flex-wrap gap-2">
-          {tags.map((tag) => (
+          {filteredTags?.map((tag) => (
             <div
               key={tag.id}
               className={`flex cursor-pointer items-center rounded-md p-1 text-xs font-bold text-gray-800 ${tag.bgColor}`}

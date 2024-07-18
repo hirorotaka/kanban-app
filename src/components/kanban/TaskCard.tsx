@@ -8,6 +8,7 @@ import { TagInput } from '../UI/Input/TagInput';
 
 export const CardTask = ({ task, newTaskId, setNewTaskId }: TaskProps) => {
   const { deleteTask, updateTask } = useContext(BoardContext)?.task || {};
+  const { allTags } = useContext(BoardContext)?.tag || {};
 
   const [editMode, setEditMode] = useState(false);
   const [prevContent, setPrevContent] = useState(task.content);
@@ -161,7 +162,10 @@ export const CardTask = ({ task, newTaskId, setNewTaskId }: TaskProps) => {
           </div>
         </div>
         <div className="w-4/5">
-          <TagInput />
+          <TagInput
+            filteredTags={allTags?.filter((tag) => tag.taskId === task.id)}
+            taskId={task.id}
+          />
         </div>
       </div>
     </div>

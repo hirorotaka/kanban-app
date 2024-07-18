@@ -55,6 +55,12 @@ export type BoardContextValues = {
     updateTask: (id: string, content: string) => void;
     tasksIds: (UniqueIdentifier | { id: UniqueIdentifier })[];
   };
+  tag: {
+    allTags: Tag[];
+    setAllTags: React.Dispatch<React.SetStateAction<Tag[]>>;
+    tagList: TagList[];
+    setTagList: React.Dispatch<React.SetStateAction<TagList[]>>;
+  };
 };
 
 export type ColumnContainerProps = {
@@ -107,4 +113,19 @@ export type DropdownMenuProps = {
   updateColumn: (id: string, updates: Partial<Column>) => void;
   columnId: string;
   handleEditTitleClick: () => void;
+};
+
+export type Tag = {
+  id: string;
+  name: string;
+  taskId: string;
+  bgColor: string;
+  ref?: HTMLDivElement;
+};
+
+export type TagList = {
+  id: string;
+  name: string;
+  bgColor: string;
+  ref?: React.RefObject<HTMLDivElement>;
 };
