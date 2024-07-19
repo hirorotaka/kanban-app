@@ -78,13 +78,15 @@ export const BoardProvider = ({ children }: ContextProviderProps) => {
     setTasks(newTasks);
   };
 
-  const updateTask = (id: string, content: string) => {
+  const updateTask = (id: string, updates: Partial<Task>) => {
     const newTasks: Task[] = tasks.map((task) => {
       if (task.id !== id) return task;
-      return { ...task, content };
+      return { ...task, ...updates };
     });
+
     setTasks(newTasks);
   };
+
   // タスクのCRUD ここまで
 
   // タグとタグリストの管理

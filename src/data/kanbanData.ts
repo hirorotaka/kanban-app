@@ -27,16 +27,20 @@ export const defaultColumns: Column[] = [
   },
 ];
 
+// defaultColumns と initialTagList は変更なし
+
 export const defaultTasks: Task[] = [
   {
     id: '1',
     columnId: 'Todo',
     content: '会議の準備',
+    endDate: new Date('2024-01-02'),
   },
   {
     id: '2',
     columnId: 'Todo',
     content: 'プレゼンテーションの作成',
+    endDate: new Date('2025-01-04'),
   },
   {
     id: '3',
@@ -52,56 +56,67 @@ export const defaultTasks: Task[] = [
     id: '5',
     columnId: 'Todo',
     content: '歯医者の予約',
+    endDate: new Date('2024-01-10'),
   },
   {
     id: '6',
     columnId: 'Doing',
     content: 'プロジェクト計画の立案',
+    endDate: new Date('2025-01-12'),
   },
   {
     id: '7',
     columnId: 'Doing',
     content: 'コードのデバッグ',
+    endDate: new Date('2025-01-14'),
   },
   {
     id: '8',
     columnId: 'Done',
     content: 'レポートの作成',
+    endDate: new Date('2025-01-16'),
   },
   {
     id: '9',
     columnId: 'Done',
     content: '新しい技術の学習',
+    endDate: new Date('2025-01-18'),
   },
   {
     id: '10',
     columnId: 'Done',
     content: 'チームミーティングの実施',
+    endDate: new Date('2025-01-20'),
   },
   {
     id: '11',
     columnId: 'Done',
     content: 'バグの修正',
+    endDate: new Date('2025-01-22'),
   },
   {
     id: '12',
     columnId: 'Done',
     content: 'クライアントとの電話会議',
+    endDate: new Date('2025-01-24'),
   },
   {
     id: '13',
     columnId: 'Done',
     content: 'ドキュメントの更新',
+    endDate: new Date('2025-01-26'),
   },
   {
     id: '14',
     columnId: 'Done',
     content: '週次レポートの提出',
+    endDate: new Date('2025-01-28'),
   },
   {
     id: '15',
     columnId: 'Done',
     content: 'オフィス用品の注文',
+    endDate: new Date('2025-01-30'),
   },
 ];
 

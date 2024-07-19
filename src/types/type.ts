@@ -18,6 +18,7 @@ export type Task = {
   id: string;
   columnId: string;
   content: string;
+  endDate?: Date | null;
 };
 
 export type ContextProviderProps = {
@@ -52,7 +53,7 @@ export type BoardContextValues = {
     setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
     createTask: (columnId: string) => Task;
     deleteTask: (id: string) => void;
-    updateTask: (id: string, content: string) => void;
+    updateTask: (id: string, updates: Partial<Task>) => void;
     tasksIds: (UniqueIdentifier | { id: UniqueIdentifier })[];
   };
   tag: {

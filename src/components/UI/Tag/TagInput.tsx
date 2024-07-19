@@ -62,6 +62,11 @@ export const TagInput = ({
   // タグ入力フィールド外クリック時の処理
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      console.log(isTagEdit, deleteConfirmationOpen);
+      console.log(
+        tagInputRef.current &&
+          !tagInputRef.current.contains(event.target as Node)
+      );
       // モーダルが開いている場合は何もしない
       if (deleteConfirmationOpen) {
         return;

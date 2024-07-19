@@ -6,6 +6,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { BoardContext } from '../../context/BoardContext';
 import { TagInput } from '../UI/Tag/TagInput';
 import { TagShow } from '../UI/Tag/TagShow';
+import { DayTimePicker } from '../DayTimePicker/DayTimePicker';
 
 export const CardTask = ({ task, newTaskId, setNewTaskId }: TaskProps) => {
   const { deleteTask, updateTask } = useContext(BoardContext)?.task || {};
@@ -48,9 +49,9 @@ export const CardTask = ({ task, newTaskId, setNewTaskId }: TaskProps) => {
   const handleUpdateTask = (content: string) => {
     if (!updateTask) return;
     if (content.trim() === '') {
-      updateTask(task.id, prevContent);
+      updateTask(task.id, { content: prevContent });
     } else {
-      updateTask(task.id, content);
+      updateTask(task.id, { content });
       setPrevContent(content);
     }
   };
@@ -129,8 +130,8 @@ export const CardTask = ({ task, newTaskId, setNewTaskId }: TaskProps) => {
             </button>
           </div>
         </div>
-        <div className="flex justify-between">
-          {/* タスクの内容表示・編集機能 */}
+        {/* タスクの内容表示・編集機能 */}
+        <div className=" mb-8 flex justify-between">
           <div className="grow">
             {!editMode ? (
               <p
@@ -147,7 +148,7 @@ export const CardTask = ({ task, newTaskId, setNewTaskId }: TaskProps) => {
                 value={task.content}
                 onChange={(e) => {
                   if (!updateTask) return;
-                  updateTask(task.id, e.target.value);
+                  updateTask(task.id, { content: e.target.value });
                 }}
                 onBlur={() => {
                   handleUpdateTask(task.content);
@@ -166,8 +167,14 @@ export const CardTask = ({ task, newTaskId, setNewTaskId }: TaskProps) => {
             )}
           </div>
         </div>
-        <div className="w-full  p-2">
-          {/* タスクのタグ表示・編集機能 */}
+
+        {/* タスクの期限表示・編集機能 */}
+        <div className="mb-1  w-full px-2">
+          <DayTimePicker task={task} updateTask={updateTask} />
+        </div>
+
+        {/* タスクのタグ表示・編集機能 */}
+        <div className="w-full  px-2">
           {isTagEdit ? (
             <TagInput
               filteredTags={filteredTags}

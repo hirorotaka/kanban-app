@@ -1,0 +1,96 @@
+.custom-datepicker {
+  font-family: sans-serif;
+}
+
+.react-datepicker-wrapper,
+.react-datepicker__input-container {
+  display: block;
+}
+
+/* 曜日から上のヘッダー部分 */
+.react-datepicker__header {
+  background-color: #4a90e2;
+}
+
+/* 曜日の下の線 */
+.react-datepicker__header,
+.react-datepicker__time-container {
+  border-color: #fff;
+}
+
+/* 日付ホバー時 */
+.react-datepicker__day:hover {
+  background: #5a9de2;
+  color: #fafafa;
+}
+
+/* 曜日 */
+.react-datepicker__day-name,
+.react-datepicker__current-month {
+  color: #fff;
+}
+
+/* キーボード操作時の他の日付 */
+.react-datepicker__day--keyboard-selected,
+.react-datepicker__month-text--keyboard-selected,
+.react-datepicker__quarter-text--keyboard-selected,
+.react-datepicker__year-text--keyboard-selected {
+  border-radius: 0.3rem;
+  background-color: #fff;
+}
+
+/* 選択された日付 */
+.react-datepicker__day--selected,
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--in-range,
+.react-datepicker__month-text--selected,
+.react-datepicker__month-text--in-selecting-range,
+.react-datepicker__month-text--in-range,
+.react-datepicker__time-container
+  .react-datepicker__time
+  .react-datepicker__time-box
+  ul.react-datepicker__time-list
+  li.react-datepicker__time-list-item--selected {
+  background: #3a80d2;
+  font-weight: normal;
+  color: #fafafa;
+}
+
+/* prevアイコン、nextアイコン */
+.react-datepicker__navigation-icon::before {
+  border-color: #fff;
+}
+
+/* prevアイコン、nextアイコンのホバー時 */
+.react-datepicker__navigation:hover .react-datepicker__navigation-icon::before {
+  border-color: #d0e4f8;
+}
+
+/* 前の月と次の月の日付 */
+.react-datepicker__day--outside-month {
+  opacity: 0.3;
+}
+
+/* 前の月と次の月の日付のホバー時 */
+.react-datepicker__day--outside-month:hover {
+  opacity: 1;
+}
+
+.react-datepicker__today-button {
+  color: #a49999;
+  padding: 5px 0;
+  font-weight: bold;
+  cursor: pointer;
+  transition:
+    background-color 0.5s,
+    color 0.5s;
+}
+
+.react-datepicker__today-button:hover {
+  background-color: #f0f0f0;
+  color: #4a90e2;
+}
+
+.react-datepicker__triangle {
+  display: none;
+}
