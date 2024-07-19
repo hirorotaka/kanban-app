@@ -58,7 +58,6 @@ export const CardTask = ({ task, newTaskId, setNewTaskId }: TaskProps) => {
 
   useEffect(() => {
     if (newTaskId?.id === task.id && newTaskId.isNewTask) {
-      console.log('newTaskId', newTaskId);
       setEditMode(true);
     }
   }, [newTaskId]);
