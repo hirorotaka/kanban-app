@@ -165,6 +165,7 @@ export type TagEditorProps = {
   handleTagListDelete: (id: string) => void;
   handleEditChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleTagEditorCancel: () => void;
+  handleInputKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 
 export type DeleteConfirmationModalProps = {

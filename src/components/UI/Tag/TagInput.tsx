@@ -5,9 +5,11 @@ import { Tag, TagInputProps, TagList } from '../../../types/type';
 import { TagEditor } from './TagEditor';
 import { TagInputClose } from './TagInputClose';
 import { TagInputList } from './TagInputList';
-import { TagInputField } from './TagInputField';
 import { TagInputSelectList } from './TagInputSelectList';
 import { DeleteConfirmationModal } from '../Modal/DeleteConfirmationModal';
+import { useTagNameInput } from '../../../hooks/useTagNameInput';
+import { InputTagForm } from '../Form/InputTagForm';
+import { CustomErrorMessage } from '../../CustomErrorMessage/CustomErrorMessage';
 
 export const TagInput = ({
   filteredTags = [],
@@ -24,7 +26,6 @@ export const TagInput = ({
 
   // 状態管理
   const [tags, setTags] = useState<Tag[]>(filteredTags || []); // タスク毎のタグ一覧
-  const [inputValue, setInputValue] = useState(''); // タグ入力フィールドの値
   const [popoverId, setPopoverId] = useState<string | null>(null); // 編集中のタグのポップオーバーID
   const [popoverPosition, setPopoverPosition] = useState({ top: 0, left: 0 }); // ポップオーバーの位置
   const [editingTag, setEditingTag] = useState<TagList | null>(null); // 編集中のタグ情報
@@ -37,6 +38,9 @@ export const TagInput = ({
   const tagInputRef = useRef<HTMLDivElement>(null); // タグ入力フィールドの参照
   const tagRefs = useRef<{ [key: string]: HTMLDivElement | null }>({}); // 各タグ要素の参照
 
+  const { register, handleSubmit, errors, onSubmit, trigger } = useTagNameInput(
+    { tags, setTags, taskId }
+  );
   // ポップオーバー外クリック時の処理
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -84,44 +88,6 @@ export const TagInput = ({
   // ポップオーバーを閉じる処理
   const closePopover = () => {
     setIsTagEdit(false);
-  };
-
-  // タグ入力フィールドの変更処理
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  };
-
-  // タグ入力フィールドのキー押下処理
-  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && inputValue.trim() !== '') {
-      const newTagName = inputValue.trim();
-
-      // 既に存在するタグと同じ単語かどうかチェック
-      const isDuplicate = [...tags, ...tagList].some(
-        (tag) => tag.name === newTagName
-      );
-
-      if (!isDuplicate) {
-        const newTagList: TagList = {
-          id: generateId(),
-          name: newTagName,
-          bgColor: 'bg-blue-300',
-        };
-
-        const newTag: Tag = {
-          id: generateId(),
-          name: newTagName,
-          taskId,
-          bgColor: 'bg-blue-300',
-          tagListId: newTagList.id,
-        };
-
-        setTags([...tags, newTag]); // タスクのタグ一覧に新しいタグを追加
-        setAllTags([...allTags, newTag]); // 全てのタグ一覧に新しいタグを追加
-        setTagList([newTagList, ...tagList]); // タグ一覧の先頭に新しいタグを追加
-        setInputValue(''); // 入力フィールドクリア
-      }
-    }
   };
 
   // タグ削除処理
@@ -265,18 +231,26 @@ export const TagInput = ({
       <div className="mt-2 origin-top-right scale-100 rounded-md bg-gray-100 p-2 shadow-2xl">
         <TagInputClose closePopover={closePopover} />
         {/* 選択済みのタグ一覧 */}
-        <div className="flex flex-wrap gap-2">
-          <TagInputList tags={tags} handleTagDelete={handleTagDelete} />
+        <div className="min-h-6">
+          <div className="flex  flex-wrap gap-2">
+            <TagInputList tags={tags} handleTagDelete={handleTagDelete} />
+          </div>
         </div>
         <div className="flex flex-col">
           {/* タグ入力フィールド */}
-          <TagInputField
-            inputValue={inputValue}
-            handleInputChange={handleInputChange}
-            handleInputKeyDown={handleInputKeyDown}
-          />
-          <h3 className="mb-2 text-sm font-semibold">タグ一覧</h3>
+          <div className="min-h-24">
+            <InputTagForm
+              handleSubmit={handleSubmit}
+              onSubmit={onSubmit}
+              register={register}
+              trigger={trigger}
+            />
+            {errors.label?.message && (
+              <CustomErrorMessage message={errors.label.message} />
+            )}
+          </div>
 
+          <h3 className="mb-2 text-sm font-semibold">タグ一覧</h3>
           {/* タグ選択リスト */}
           {tagList.length > 0 && (
             <div className="flex max-h-44 flex-col gap-1 overflow-auto">
