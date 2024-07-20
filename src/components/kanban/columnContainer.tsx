@@ -7,7 +7,7 @@ import { IoAdd, IoApps } from 'react-icons/io5';
 import { SortableContext } from '@dnd-kit/sortable';
 import { BoardContext } from '../../context/BoardContext';
 import { CustomErrorMessage } from '../CustomErrorMessage/CustomErrorMessage';
-import { useColumnContainer } from '../../hooks/useColumnContainer';
+import { useColumnTitleEdit } from '../../hooks/useColumTitleEdit';
 import { InputForm } from '../UI/Form/InputForm';
 import { DropdownMenu } from '../UI/Menu/DropDownMenu';
 
@@ -38,7 +38,7 @@ export const ColumnContainer = ({
     trigger,
     editMode,
     handleEditTitleClick,
-  } = useColumnContainer({ column, updateColumn });
+  } = useColumnTitleEdit({ column, updateColumn });
 
   // @dnd-kit/sortableを使用してカラムのドラッグ&ドロップ機能を実装
   const {

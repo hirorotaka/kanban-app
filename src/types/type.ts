@@ -93,7 +93,7 @@ export type ErrorMessageProps = {
   message: string;
 };
 
-export type useColumnContainerProps = {
+export type useColumnTitleEditProps = {
   column: Column;
   updateColumn: (id: string, updates: Partial<Column>) => void;
 };

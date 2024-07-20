@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { useColumnContainerProps } from '../types/type';
+import { useColumnTitleEditProps } from '../types/type';
 import { useEffect, useState } from 'react';
 
 const validationMaxLength = 15;
@@ -23,10 +23,10 @@ const validationSchema = z.object({
 // バリデーションスキーマから型を推論
 export type FormValues = z.infer<typeof validationSchema>;
 
-export const useColumnContainer = ({
+export const useColumnTitleEdit = ({
   column,
   updateColumn,
-}: useColumnContainerProps) => {
+}: useColumnTitleEditProps) => {
   const [editMode, setEditMode] = useState(false);
   const [prevTitle, setPrevLabel] = useState(column?.title || '');
 
@@ -80,16 +80,13 @@ export const useColumnContainer = ({
   };
 
   return {
-    column,
-    editMode,
-    setEditMode,
-    errors,
-    isValid,
     register,
-    trigger,
     handleSubmit,
+    errors,
     onSubmit,
     handleTextareaChange,
+    trigger,
+    editMode,
     handleEditTitleClick,
   };
 };

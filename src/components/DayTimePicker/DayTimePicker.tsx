@@ -77,7 +77,7 @@ export const DayTimePicker = ({ task, updateTask }: DayTimePickerProps) => {
             locale="ja"
             dateFormat="yyyy/MM/dd"
             minDate={new Date()}
-            calendarClassName="shadow-2xl rounded-md text-base"
+            calendarClassName="shadow-2xl rounded-md text-base animate-bounce-in"
             onClickOutside={handleClickOutside}
             renderCustomHeader={(props) => (
               <CustomDatePickerHeader
