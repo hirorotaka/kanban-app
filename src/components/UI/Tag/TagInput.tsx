@@ -261,7 +261,7 @@ export const TagInput = ({
       {popoverId && editingTag && (
         <div
           ref={popoverRef}
-          className="absolute z-10 mt-2 w-52 rounded-md border-2 border-gray-300 bg-white px-4  py-2 shadow-lg"
+          className="absolute z-10 mt-2 w-72 rounded-md border-2 border-gray-300 bg-gray-100 px-4  py-2 shadow-lg"
           style={{ top: popoverPosition.top, left: popoverPosition.left }}
         >
           <div className="flex justify-end">
@@ -275,7 +275,7 @@ export const TagInput = ({
               <IoClose size={20} />
             </button>
           </div>
-          <h3 className="text-sm font-medium text-gray-900">タグ編集</h3>
+          <h3 className="text-sm font-semibold text-gray-900">タグ編集</h3>
           <div className="min-h-24">
             <InputTagEditForm
               handleSubmit={editHandleSubmit}

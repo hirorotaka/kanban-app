@@ -20,11 +20,11 @@ export const InputTagEditForm = ({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="mt-2  border-b-2 border-gray-300 px-2 py-1 text-xs focus:border-blue-500 focus:outline-none"
+      className="mt-2  border-b-2 border-gray-300 bg-gray-100 px-2 py-1 text-sm focus:outline-none"
     >
       <div className="grow">
         <input
-          className="w-full rounded border-none  p-1  text-black outline-none"
+          className="w-full rounded border-none  bg-gray-100 p-1  text-black outline-none"
           {...register('label', { onChange: () => trigger('label') })}
           autoFocus
           placeholder="タグを編集します"
