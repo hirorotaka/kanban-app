@@ -34,13 +34,11 @@ export const InputForm = ({
             autoFocus
             onBlur={handleTextareaChange}
           />
-          <button
-            type="submit"
-            className="absolute right-2 top-1.5 flex items-center rounded bg-blue-500 px-2 py-1 font-bold text-white transition-colors duration-200 hover:bg-blue-600"
-          >
-            <span className="mr-1">完了</span>
-            <AiOutlineEnter size={20} />
-          </button>
+        </div>
+        <div>
+          <p className="text-xs text-gray-400 hover:text-gray-500">
+            保存: Enter または フォーカスアウト時
+          </p>
         </div>
       </form>
     </div>
