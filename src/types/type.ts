@@ -71,16 +71,6 @@ export type ColumnContainerProps = {
 
 export type TaskProps = {
   task: Task;
-  newTaskId?: {
-    id: string;
-    isNewTask: boolean;
-  } | null;
-  setNewTaskId: React.Dispatch<
-    React.SetStateAction<{
-      id: string;
-      isNewTask: boolean;
-    } | null>
-  >;
 };
 
 export type NavItemProps = {
@@ -96,6 +86,11 @@ export type ErrorMessageProps = {
 export type useColumnTitleEditProps = {
   column: Column;
   updateColumn: (id: string, updates: Partial<Column>) => void;
+};
+
+export type useTaskContentEditProps = {
+  task: Task;
+  updateTask: (id: string, updates: Partial<Task>) => void;
 };
 
 export type EmojiPickerProps = {

@@ -156,14 +156,7 @@ export const ColumnContainer = ({
       >
         {/* @dnd-kit/sortableを使用してタスクのドラッグ&ドロップ機能を実装 */}
         <SortableContext items={tasksIds || []}>
-          {filterTasks?.map((task) => (
-            <CardTask
-              key={task.id}
-              task={task}
-              newTaskId={newTaskId}
-              setNewTaskId={setNewTaskId}
-            />
-          ))}
+          {filterTasks?.map((task) => <CardTask key={task.id} task={task} />)}
         </SortableContext>
       </div>
       {/* タスク追加ボタンの表示 */}

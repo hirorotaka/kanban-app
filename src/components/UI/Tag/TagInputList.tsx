@@ -12,7 +12,7 @@ export const TagInputList = ({ tags, handleTagDelete }: TagInputListProps) => {
           e.stopPropagation();
           handleTagDelete(tag.id);
         }}
-        className="click-effect ml-2 text-white transition duration-150 ease-in-out hover:text-red-500 focus:outline-none"
+        className="ml-2 text-white transition duration-150 ease-in-out hover:text-red-500 focus:outline-none"
       >
         &times;
       </button>

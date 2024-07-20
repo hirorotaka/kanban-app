@@ -66,7 +66,8 @@ export const BoardProvider = ({ children }: ContextProviderProps) => {
     const newTask: Task = {
       id: generateId(),
       columnId,
-      content: '新しいタスク',
+      content: '無題',
+      endDate: null,
     };
 
     setTasks([...tasks, newTask]);

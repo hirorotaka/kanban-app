@@ -1,71 +1,76 @@
+import React, { useEffect, useRef } from 'react';
 import {
-  FieldErrors,
   UseFormHandleSubmit,
   UseFormRegister,
   UseFormTrigger,
 } from 'react-hook-form';
+import { IoClose } from 'react-icons/io5';
 
-type FormProps = {
-  formUi: string;
+export type InputFormProps = {
   handleSubmit: UseFormHandleSubmit<{ label: string }, undefined>;
   onSubmit: (data: { label: string }) => void;
   register: UseFormRegister<{ label: string }>;
   trigger: UseFormTrigger<{ label: string }>;
-  errors: FieldErrors<{ label: string }>;
-  tagId: string;
-  inputType: 'input' | 'textarea';
   handleTextareaChange: () => void;
+  handleCancelClick: () => void;
+  isEditMode: boolean;
 };
 
-export const Form = ({
-  formUi,
+export const TextAreaForm = ({
   handleSubmit,
   onSubmit,
   register,
   trigger,
-  tagId,
-  inputType,
   handleTextareaChange,
-}: FormProps) => {
+  handleCancelClick,
+  isEditMode,
+}: InputFormProps) => {
+  const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (formRef.current && !formRef.current.contains(event.target as Node)) {
+        handleTextareaChange();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isEditMode, handleTextareaChange]);
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.shiftKey && event.key === 'Enter') {
+      event.preventDefault();
+      handleSubmit(onSubmit)();
+    }
+  };
+
   return (
-    <div className={`${formUi}`}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="grow">
-          {inputType === 'input' ? (
-            <input
-              className="w-full rounded border-2  bg-blue-100 font-bold text-black outline-none focus:border-blue-500"
-              id={tagId}
-              {...register('label', { onChange: () => trigger('label') })}
-              autoFocus
-              onBlur={handleTextareaChange}
-            />
-          ) : (
-            <textarea
-              className="w-full resize-none overflow-hidden rounded
-              border-2 p-1 font-bold text-black outline-none focus:border-blue-500"
-              id={tagId}
-              {...register('label', { onChange: () => trigger('label') })}
-              autoFocus
-              onBlur={handleTextareaChange}
-              onKeyDown={(e) => {
-                const textarea = e.target as HTMLTextAreaElement;
-                const currentRow = textarea.value
-                  .slice(0, textarea.selectionStart)
-                  .split('\n').length;
-
-                if (e.key === 'Enter' && currentRow >= 2) {
-                  e.preventDefault();
-                }
-
-                if (e.key === 'Enter' && e.shiftKey) {
-                  handleTextareaChange();
-                }
-              }}
-              rows={2}
-            />
-          )}
-        </div>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit(onSubmit)} ref={formRef}>
+      <div className="flex justify-end">
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleCancelClick();
+          }}
+          className="p-2 text-gray-300 hover:text-gray-500 focus:outline-none"
+        >
+          <IoClose size={24} />
+        </button>
+      </div>
+      <textarea
+        placeholder="タスクを追加してください。"
+        className="min-h-[200px] w-full resize-none whitespace-pre-wrap break-all rounded border-none text-black outline-none"
+        {...register('label', { onChange: () => trigger('label') })}
+        autoFocus
+        onKeyDown={handleKeyDown}
+      />
+      <div className="text-xs text-gray-300 hover:text-gray-500">
+        <p>保存: Shift + Enter または フォーカスアウト時</p>
+        <p>改行: Enter</p>
+      </div>
+    </form>
   );
 };
