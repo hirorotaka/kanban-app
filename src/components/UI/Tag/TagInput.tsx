@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { generateId } from '../../../utils/utils';
 import { BoardContext } from '../../../context/BoardContext';
 import { Tag, TagInputProps, TagList } from '../../../types/type';
-import { TagEditor } from './TagEditor';
 import { TagInputClose } from './TagInputClose';
 import { TagInputList } from './TagInputList';
 import { TagInputSelectList } from './TagInputSelectList';
@@ -10,6 +9,10 @@ import { DeleteConfirmationModal } from '../Modal/DeleteConfirmationModal';
 import { useTagNameInput } from '../../../hooks/useTagNameInput';
 import { InputTagForm } from '../Form/InputTagForm';
 import { CustomErrorMessage } from '../../CustomErrorMessage/CustomErrorMessage';
+import { InputTagEditForm } from '../Form/InputTagEditForm';
+import { useTagNameEdit } from '../../../hooks/useTagNameEdit';
+import { IoClose, IoTrash } from 'react-icons/io5';
+import { TagColorList } from '../../../data/ColorList';
 
 export const TagInput = ({
   filteredTags = [],
@@ -38,9 +41,6 @@ export const TagInput = ({
   const tagInputRef = useRef<HTMLDivElement>(null); // タグ入力フィールドの参照
   const tagRefs = useRef<{ [key: string]: HTMLDivElement | null }>({}); // 各タグ要素の参照
 
-  const { register, handleSubmit, errors, onSubmit, trigger } = useTagNameInput(
-    { tags, setTags, taskId }
-  );
   // ポップオーバー外クリック時の処理
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -130,13 +130,6 @@ export const TagInput = ({
     }
   };
 
-  // タグ編集変更処理
-  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (editingTag) {
-      setEditingTag({ ...editingTag, name: e.target.value }); // 編集中のタグ名を更新
-    }
-  };
-
   // タグカラー変更処理
   const handleColorChange = (color: string) => {
     if (editingTag) {
@@ -186,31 +179,6 @@ export const TagInput = ({
     setTagToDelete(null);
   };
 
-  const handleEditSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (editingTag) {
-      const updatedTagList = tagList.map((tag) =>
-        tag.id === editingTag.id ? editingTag : tag
-      );
-      setTagList(updatedTagList);
-
-      // Update allTags
-      const updatedAllTags = allTags.map((tag) =>
-        tag.tagListId === editingTag.id ? { ...tag, ...editingTag } : tag
-      );
-      setAllTags(updatedAllTags);
-
-      // Update tags
-      const updatedTags = tags.map((tag) =>
-        tag.tagListId === editingTag.id ? { ...tag, ...editingTag } : tag
-      );
-      setTags(updatedTags);
-
-      setEditingTag(null);
-      setPopoverId(null);
-    }
-  };
-
   // ポップオーバー閉じる処理
   const handlePopoverClose = () => {
     setPopoverId(null); // ポップオーバーIDをリセット
@@ -225,6 +193,26 @@ export const TagInput = ({
     }
     return { top: 0, left: 0 };
   };
+
+  const { register, handleSubmit, errors, onSubmit, trigger } = useTagNameInput(
+    {
+      tags,
+      setTags,
+      taskId,
+    }
+  );
+  const {
+    editRegister,
+    editHandleSubmit,
+    editErrors,
+    editTrigger,
+    onEditSubmit,
+  } = useTagNameEdit({
+    tags,
+    setTags,
+    editingTag,
+    handleTagEditorCancel,
+  });
 
   return (
     <div ref={tagInputRef} className="flex flex-col gap-2 p-2">
@@ -273,17 +261,57 @@ export const TagInput = ({
       {popoverId && editingTag && (
         <div
           ref={popoverRef}
-          className="absolute z-10 mt-2 w-64 rounded-md border-2 border-gray-300 bg-white py-1 shadow-lg"
+          className="absolute z-10 mt-2 w-52 rounded-md border-2 border-gray-300 bg-white px-4  py-2 shadow-lg"
           style={{ top: popoverPosition.top, left: popoverPosition.left }}
         >
-          <TagEditor
-            editingTag={editingTag}
-            handleEditSubmit={handleEditSubmit}
-            handleEditChange={handleEditChange}
-            handleColorChange={handleColorChange}
-            handleTagListDelete={handleTagListDelete}
-            handleTagEditorCancel={handleTagEditorCancel}
-          />
+          <div className="flex justify-end">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                handleTagEditorCancel();
+              }}
+              className="text-gray-300 hover:text-gray-600 focus:outline-none"
+            >
+              <IoClose size={20} />
+            </button>
+          </div>
+          <h3 className="text-sm font-medium text-gray-900">タグ編集</h3>
+          <div className="min-h-24">
+            <InputTagEditForm
+              handleSubmit={editHandleSubmit}
+              onSubmit={onEditSubmit}
+              register={editRegister}
+              trigger={editTrigger}
+            />
+            {editErrors.label?.message && (
+              <CustomErrorMessage message={editErrors.label.message} />
+            )}
+          </div>
+
+          <p className="text-sm text-gray-600">色を選択:</p>
+          <div className="mt-1 flex flex-wrap gap-1">
+            {TagColorList.map((color) => (
+              <button
+                key={color}
+                type="button"
+                className={`size-6 rounded-full ${color} ${
+                  editingTag.bgColor === color ? 'ring-2 ring-blue-500' : ''
+                }`}
+                onClick={() => handleColorChange(color)}
+              />
+            ))}
+          </div>
+
+          <div className="mt-4 flex justify-between">
+            <button
+              type="button"
+              onClick={() => handleTagListDelete(editingTag.id)}
+              className="flex items-center rounded bg-red-100 px-2 py-1 text-xs text-red-600 hover:bg-red-200"
+            >
+              <IoTrash className="mr-1" />
+              削除
+            </button>
+          </div>
         </div>
       )}
 

@@ -8,7 +8,7 @@ import { TagInput } from '../UI/Tag/TagInput';
 import { TagShow } from '../UI/Tag/TagShow';
 import { DayTimePicker } from '../DayTimePicker/DayTimePicker';
 import { useTaskContentEdit } from '../../hooks/useTaskContentEdit';
-import { TextAreaForm } from '../UI/Form/TextAreaForm';
+import { TextAreaContentForm } from '../UI/Form/TextAreaContentForm';
 import { CustomErrorMessage } from '../CustomErrorMessage/CustomErrorMessage';
 
 export const CardTask = ({ task }: TaskProps) => {
@@ -123,7 +123,7 @@ export const CardTask = ({ task }: TaskProps) => {
             </p>
           ) : (
             <div className="animate-bounce-in mt-1 w-full cursor-pointer rounded-lg border border-gray-200 bg-white px-2 shadow-xl">
-              <TextAreaForm
+              <TextAreaContentForm
                 handleSubmit={handleSubmit}
                 onSubmit={onSubmit}
                 register={register}

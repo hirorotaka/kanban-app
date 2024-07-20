@@ -4,31 +4,30 @@ import {
   UseFormTrigger,
 } from 'react-hook-form';
 
-export type InputTagFormProps = {
+export type InputTagEditFormProps = {
   handleSubmit: UseFormHandleSubmit<{ label: string }, undefined>;
   onSubmit: (data: { label: string }) => void;
   register: UseFormRegister<{ label: string }>;
   trigger: UseFormTrigger<{ label: string }>;
 };
 
-export const InputTagForm = ({
+export const InputTagEditForm = ({
   handleSubmit,
   onSubmit,
   register,
   trigger,
-}: InputTagFormProps) => {
+}: InputTagEditFormProps) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="mt-2  border-b-2 border-gray-300 bg-gray-100 px-2 py-1 text-sm focus:border-blue-500 focus:outline-none"
+      className="mt-2  border-b-2 border-gray-300 px-2 py-1 text-xs focus:border-blue-500 focus:outline-none"
     >
       <div className="grow">
         <input
-          className="w-full rounded border-none  bg-gray-100 p-1  text-black outline-none"
+          className="w-full rounded border-none  p-1  text-black outline-none"
           {...register('label', { onChange: () => trigger('label') })}
           autoFocus
-          placeholder="一覧を選択するか作成します"
-          defaultValue={''}
+          placeholder="タグを編集します"
         />
       </div>
       <div>

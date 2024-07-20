@@ -6,7 +6,7 @@ import {
 } from 'react-hook-form';
 import { IoClose } from 'react-icons/io5';
 
-export type InputFormProps = {
+export type TextAreaContentFormProps = {
   handleSubmit: UseFormHandleSubmit<{ label: string }, undefined>;
   onSubmit: (data: { label: string }) => void;
   register: UseFormRegister<{ label: string }>;
@@ -16,7 +16,7 @@ export type InputFormProps = {
   isEditMode: boolean;
 };
 
-export const TextAreaForm = ({
+export const TextAreaContentForm = ({
   handleSubmit,
   onSubmit,
   register,
@@ -24,7 +24,7 @@ export const TextAreaForm = ({
   handleTextareaChange,
   handleCancelClick,
   isEditMode,
-}: InputFormProps) => {
+}: TextAreaContentFormProps) => {
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {

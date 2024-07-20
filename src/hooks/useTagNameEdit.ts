@@ -1,10 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { generateId } from '../utils/utils';
 import { Tag, TagList } from '../types/type';
 import { BoardContext } from '../context/BoardContext';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 const validationMaxLength = 20;
 
@@ -24,13 +23,15 @@ export type FormValues = z.infer<typeof validationSchema>;
 type UseTagNameInputProps = {
   tags: Tag[];
   setTags: React.Dispatch<React.SetStateAction<Tag[]>>;
-  taskId: string;
+  editingTag: TagList | null;
+  handleTagEditorCancel: () => void;
 };
 
-export const useTagNameInput = ({
+export const useTagNameEdit = ({
   tags,
   setTags,
-  taskId,
+  editingTag,
+  handleTagEditorCancel,
 }: UseTagNameInputProps) => {
   const { allTags, setAllTags, tagList, setTagList } =
     useContext(BoardContext)?.tag || {};
@@ -40,19 +41,26 @@ export const useTagNameInput = ({
   }
 
   const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-    reset,
-    setValue,
-    clearErrors,
-    setError,
-    trigger,
-    getValues,
+    register: editRegister,
+    handleSubmit: editHandleSubmit,
+    formState: { errors: editErrors },
+    reset: editReset,
+    setValue: editSetValue,
+    setError: editSetError,
+    trigger: editTrigger,
   } = useForm<FormValues>({
-    defaultValues: { label: '' },
+    defaultValues: { label: editingTag ? editingTag.name : '' },
     resolver: zodResolver(validationSchema),
   });
+
+  useEffect(() => {
+    editReset();
+    if (editingTag) {
+      editSetValue('label', editingTag.name);
+    } else {
+      editSetValue('label', '');
+    }
+  }, [editingTag?.name, editSetValue, editReset]);
 
   const checkDuplicate = (newTagName: string): boolean => {
     return [...tags, ...tagList].some(
@@ -61,52 +69,49 @@ export const useTagNameInput = ({
   };
 
   const handleDuplicate = () => {
-    setError('label', {
+    editSetError('label', {
       type: 'manual',
       message: '既に同じ名前のタグが存在します',
     });
   };
 
-  const createNewTag = (newTagName: string) => {
-    const newTagList: TagList = {
-      id: generateId(),
-      name: newTagName,
-      bgColor: 'bg-blue-300',
-    };
+  const updateExistingTag = (newTagName: string) => {
+    const updatedTagList = tagList.map((tag) =>
+      tag.id === editingTag!.id ? { ...tag, name: newTagName } : tag
+    );
+    setTagList(updatedTagList);
 
-    const newTag: Tag = {
-      id: generateId(),
-      name: newTagName,
-      taskId,
-      bgColor: 'bg-blue-300',
-      tagListId: newTagList.id,
-    };
+    const updatedAllTags = allTags.map((tag) =>
+      tag.tagListId === editingTag!.id ? { ...tag, name: newTagName } : tag
+    );
+    setAllTags(updatedAllTags);
 
-    setTags([...tags, newTag]);
-    setAllTags([...allTags, newTag]);
-    setTagList([newTagList, ...tagList]);
+    const updatedTags = tags.map((tag) =>
+      tag.tagListId === editingTag!.id ? { ...tag, name: newTagName } : tag
+    );
+    setTags(updatedTags);
+
+    handleTagEditorCancel();
   };
 
-  const onSubmit = (data: FormValues) => {
+  const onEditSubmit = (data: FormValues) => {
     const newTagName = data.label.trim();
 
     if (checkDuplicate(newTagName)) {
       handleDuplicate();
       return;
     }
-    createNewTag(newTagName);
-    reset();
+
+    updateExistingTag(newTagName);
+
+    editReset();
   };
 
   return {
-    isValid,
-    register,
-    handleSubmit,
-    errors,
-    onSubmit,
-    trigger,
-    setValue,
-    clearErrors,
-    getValues,
+    editRegister,
+    editHandleSubmit,
+    editErrors,
+    editTrigger,
+    onEditSubmit,
   };
 };
