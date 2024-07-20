@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Task } from '../../types/type';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { format, isAfter } from 'date-fns';
+import { format, isToday, isAfter } from 'date-fns';
 import { ja } from 'date-fns/locale';
 registerLocale('ja', ja);
 import './DayTimePicker.css';
@@ -17,13 +17,13 @@ export type DayTimePickerProps = {
 export const DayTimePicker = ({ task, updateTask }: DayTimePickerProps) => {
   const [endDate, setEndDate] = useState<Date | null>(task.endDate || null);
   const [isOpen, setIsOpen] = useState(false);
-  const [isOverdue, setIsOverdue] = useState(false);
 
-  useEffect(() => {
-    if (endDate) {
-      setIsOverdue(isAfter(new Date(), endDate));
-    }
-  }, [endDate]);
+  const getDueDateColor = (date: Date | null) => {
+    if (!date) return '';
+    if (isToday(date)) return 'text-orange-500';
+    if (isAfter(new Date(), date)) return 'text-red-500';
+    return 'text-gray-700';
+  };
 
   const handleChange = (e: Date | null) => {
     setEndDate(e);
@@ -56,7 +56,7 @@ export const DayTimePicker = ({ task, updateTask }: DayTimePickerProps) => {
         <button onClick={handleClick}>
           {endDate ? (
             <span
-              className={`transition duration-300 ease-out hover:opacity-70 ${isOverdue ? 'text-red-500' : 'text-gray-700'}`}
+              className={`transition duration-300 ease-out hover:opacity-70 ${getDueDateColor(endDate)}`}
             >
               <span>期限：</span>
               {format(endDate, 'yyyy/MM/dd')}

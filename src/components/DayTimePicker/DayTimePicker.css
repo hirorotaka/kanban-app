@@ -1,45 +1,70 @@
+/* tailwind.config.jsで定義した変数を使用 */
+@import 'tailwindcss/base';
+
+:root {
+  /* カスタムCSS変数の定義 */
+  --datepicker-blue: theme(
+    'colors.blue.500'
+  ); /* デートピッカーの基本的なブルー */
+  --datepicker-blue-light: theme('colors.blue.400'); /* ホバー時のブルー */
+  --datepicker-blue-lighter: theme(
+    'colors.blue.100'
+  ); /* アイコンホバー時のブルー */
+  --datepicker-blue-dark: theme('colors.blue.600'); /* 選択された日付のブルー */
+  --datepicker-gray: theme('colors.gray.500'); /* "Today"ボタンのグレー */
+  --datepicker-gray-light: theme(
+    'colors.gray.100'
+  ); /* "Today"ボタンホバー時のグレー */
+  --datepicker-white: theme('colors.white'); /* 白 */
+  --datepicker-slate: theme('colors.slate.50'); /* 非常に淡いグレー */
+}
+
+/* デートピッカーのフォントファミリーを設定 */
 .custom-datepicker {
   font-family: sans-serif;
 }
 
+/* デートピッカーのラッパーとインプットコンテナをブロックレベル要素として表示 */
 .react-datepicker-wrapper,
 .react-datepicker__input-container {
   display: block;
 }
 
-/* 曜日から上のヘッダー部分 */
+/* デートピッカーのヘッダーの背景色を設定 */
 .react-datepicker__header {
-  background-color: #4a90e2;
+  background-color: var(--datepicker-blue);
 }
 
-/* 曜日の下の線 */
+/* デートピッカーのヘッダーと時間コンテナの境界線の色を設定 */
 .react-datepicker__header,
 .react-datepicker__time-container {
-  border-color: #fff;
+  border-color: var(--datepicker-white);
 }
 
-/* 日付ホバー時 */
+/* 日付のホバー時の背景色とテキスト色を設定 */
 .react-datepicker__day:hover {
-  background: #5a9de2;
-  color: #fafafa;
+  background: var(--datepicker-blue-light);
+  color: var(--datepicker-slate);
 }
 
-/* 曜日 */
+/* 曜日と現在の月のテキスト色、背景色、境界線の丸みを設定 */
 .react-datepicker__day-name,
 .react-datepicker__current-month {
-  color: #fff;
+  color: var(--datepicker-white);
+  background: var(--datepicker-blue-light);
+  border-radius: 50%;
 }
 
-/* キーボード操作時の他の日付 */
+/* キーボードで選択された日付の境界線の丸みと背景色を設定 */
 .react-datepicker__day--keyboard-selected,
 .react-datepicker__month-text--keyboard-selected,
 .react-datepicker__quarter-text--keyboard-selected,
 .react-datepicker__year-text--keyboard-selected {
   border-radius: 0.3rem;
-  background-color: #fff;
+  background-color: var(--datepicker-white);
 }
 
-/* 選択された日付 */
+/* 選択された日付、選択中の日付範囲、選択された時刻の背景色とテキスト色を設定 */
 .react-datepicker__day--selected,
 .react-datepicker__day--in-selecting-range,
 .react-datepicker__day--in-range,
@@ -51,46 +76,55 @@
   .react-datepicker__time-box
   ul.react-datepicker__time-list
   li.react-datepicker__time-list-item--selected {
-  background: #3a80d2;
+  background: var(--datepicker-blue-dark);
   font-weight: normal;
-  color: #fafafa;
+  color: var(--datepicker-slate);
 }
 
-/* prevアイコン、nextアイコン */
+/* 前の月と次の月のナビゲーションアイコンの色を設定 */
 .react-datepicker__navigation-icon::before {
-  border-color: #fff;
+  border-color: var(--datepicker-white);
 }
 
-/* prevアイコン、nextアイコンのホバー時 */
+/* 前の月と次の月のナビゲーションアイコンのホバー時の色を設定 */
 .react-datepicker__navigation:hover .react-datepicker__navigation-icon::before {
-  border-color: #d0e4f8;
+  border-color: var(--datepicker-blue-lighter);
 }
 
-/* 前の月と次の月の日付 */
+/* 前の月と次の月の日付のオパシティを設定 */
 .react-datepicker__day--outside-month {
   opacity: 0.3;
 }
 
-/* 前の月と次の月の日付のホバー時 */
+/* 前の月と次の月の日付のホバー時のオパシティを設定 */
 .react-datepicker__day--outside-month:hover {
   opacity: 1;
 }
 
+/* "Today"ボタンのスタイルを設定 */
 .react-datepicker__today-button {
-  color: #a49999;
+  color: var(--datepicker-gray);
   padding: 5px 0;
   font-weight: bold;
   cursor: pointer;
+  border: none;
   transition:
     background-color 0.5s,
     color 0.5s;
 }
 
+/* "Today"ボタンのホバー時のスタイルを設定 */
 .react-datepicker__today-button:hover {
-  background-color: #f0f0f0;
-  color: #4a90e2;
+  background-color: var(--datepicker-gray-light);
+  color: var(--datepicker-blue);
 }
 
+/* デートピッカーの三角形を非表示にする */
 .react-datepicker__triangle {
   display: none;
+}
+
+/* デートピッカー自体の境界線を削除 */
+.react-datepicker {
+  border: none;
 }
