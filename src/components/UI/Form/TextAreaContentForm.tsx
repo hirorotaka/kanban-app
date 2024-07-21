@@ -70,6 +70,7 @@ export const TextAreaContentForm = ({
       <div className="text-xs text-gray-300 hover:text-gray-500">
         <p>保存: Shift + Enter または フォーカスアウト時</p>
         <p>改行: Enter</p>
+        <p>閉じる: 元の値に戻る</p>
       </div>
     </form>
   );

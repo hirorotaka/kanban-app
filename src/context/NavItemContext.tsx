@@ -26,20 +26,12 @@ const NavItemProvider = ({ children }: ContextProviderProps) => {
     setNavItems([...navItems, newNavItem]);
   };
 
-  const updateNavItem = (id: string, label: string) => {
+  const updateNavItem = (id: string, updates: Partial<NavItem>) => {
     const newNavItems: NavItem[] = navItems.map((navItem) => {
       if (navItem.id !== id) return navItem;
-      return { ...navItem, label };
+      return { ...navItem, ...updates };
     });
 
-    setNavItems(newNavItems);
-  };
-
-  const updateNavIcon = (id: string, icon: string) => {
-    const newNavItems: NavItem[] = navItems.map((navItem) => {
-      if (navItem.id !== id) return navItem;
-      return { ...navItem, icon };
-    });
     setNavItems(newNavItems);
   };
 
@@ -60,7 +52,6 @@ const NavItemProvider = ({ children }: ContextProviderProps) => {
     navCheckId,
     setNavCheckId,
     updateNavItem,
-    updateNavIcon,
   };
   return (
     <NavItemContext.Provider value={contextValues}>

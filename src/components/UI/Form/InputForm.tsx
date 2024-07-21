@@ -4,7 +4,6 @@ import {
   UseFormRegister,
   UseFormTrigger,
 } from 'react-hook-form';
-import { AiOutlineEnter } from 'react-icons/ai';
 
 export type InputFormProps = {
   formUi: string;
