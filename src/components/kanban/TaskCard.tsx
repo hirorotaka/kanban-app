@@ -85,7 +85,7 @@ export const CardTask = ({ task }: TaskProps) => {
           <button
             {...attributes}
             {...listeners}
-            className={`text-gray-500 focus:outline-none ${
+            className={` text-gray-500 focus:outline-none active:scale-90 ${
               isGrabbing ? 'cursor-grabbing' : 'cursor-grab'
             }`}
             onMouseDown={() => setIsGrabbing(true)}
@@ -145,7 +145,7 @@ export const CardTask = ({ task }: TaskProps) => {
         </div>
 
         {/* タスクのタグ表示・編集機能 */}
-        <div className="w-full  px-2">
+        <div className="w-full px-2">
           {isTagEdit ? (
             <TagInput
               filteredTags={filteredTags}

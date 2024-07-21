@@ -160,7 +160,7 @@ export const KanbanBoard = () => {
           {/* 新しいカラムを追加するボタン */}
           <div className="shrink-0">
             <button
-              className="flex items-center justify-center rounded-lg bg-green-500 p-2 text-white transition duration-200 hover:opacity-80"
+              className="flex items-center justify-center rounded-lg bg-green-500 p-2 text-white transition duration-300 ease-in-out hover:bg-green-600 active:scale-90"
               onClick={() => {
                 if (!createNewColumn || !navCheckId) return;
                 createNewColumn(navCheckId);

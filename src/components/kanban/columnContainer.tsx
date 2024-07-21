@@ -99,7 +99,7 @@ export const ColumnContainer = ({
           <button
             {...attributes}
             {...listeners}
-            className={`mr-1 text-gray-500 focus:outline-none ${
+            className={`mr-1 text-gray-500 focus:outline-none active:scale-90 ${
               isGrabbing ? 'cursor-grabbing' : 'cursor-grab'
             }`}
             onMouseDown={() => setIsGrabbing(true)}

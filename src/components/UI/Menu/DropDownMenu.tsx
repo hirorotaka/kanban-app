@@ -57,15 +57,17 @@ export const DropdownMenu = ({
     <div className="relative inline-block text-left" ref={popoverRef}>
       <button
         type="button"
-        className="inline-flex w-full justify-center rounded-md px-2 py-1 text-sm font-medium text-white focus:outline-none"
+        className="inline-flex w-full justify-center rounded-md px-2 py-1 text-sm font-medium focus:outline-none"
         onClick={togglePopover}
       >
-        <GoKebabHorizontal className="size-8 hover:opacity-60" />
+        <GoKebabHorizontal className="size-8 active:scale-90" />
       </button>
 
       <div
-        className={`absolute right-0 z-10 mt-2 w-60 origin-top-right rounded-md bg-gray-100 shadow-2xl transition duration-300 ease-out${
-          isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
+        className={`absolute right-4 z-10 w-56 rounded-md border-2 border-gray-200 bg-gray-100 shadow-lg transition duration-300 ${
+          isOpen
+            ? 'scale-100 opacity-100'
+            : 'pointer-events-none scale-95 opacity-0'
         }`}
       >
         {isOpen && (
@@ -76,37 +78,37 @@ export const DropdownMenu = ({
                   e.stopPropagation();
                   closePopover();
                 }}
-                className="text-gray-300 hover:text-gray-600 focus:outline-none"
+                className="mr-2 p-2 text-gray-400 hover:text-gray-600 focus:outline-none"
               >
-                <IoClose size={20} />
+                <IoClose className="size-5" />
               </button>
             </div>
             <button
               onClick={handleEditFormFadeIn}
-              className="flex w-full items-center px-4 py-2 text-sm text-black hover:bg-gray-300"
+              className="flex w-full items-center px-4 py-2 text-sm text-blue-500 hover:bg-blue-200"
             >
-              <IoPencil className="mr-3 size-5" />
+              <IoPencil className="mr-3 size-5 text-blue-500" />
               タイトルを編集
             </button>
             <button
               onClick={handleDeleteColumn}
-              className="flex w-full items-center px-4 py-2 text-sm text-black  hover:bg-red-400 hover:text-white"
+              className="flex w-full items-center px-4 py-2 text-sm text-red-500 hover:bg-red-200"
             >
               <IoTrashOutline className="mr-3 size-5" />
               グループを削除
             </button>
-            <div className="mx-2 mt-1 border-t border-gray-300 pt-2">
-              <p className="px-4 py-2 text-sm font-medium text-gray-700">
-                カラー
+            <div className="mx-2 mt-2 border-t border-gray-200 pt-2">
+              <p className="px-4 pb-2 pt-3 text-sm font-medium text-gray-900">
+                背景色
               </p>
-              <div className="grid grid-cols-5 gap-2 px-4 py-1">
+              <div className="grid grid-cols-5 gap-2 px-4 pb-3">
                 {gradientColors.map((color) => (
                   <button
                     key={color.value}
-                    className={`size-5 rounded-sm ${color.value} ${
+                    className={`size-6 rounded-full ring-offset-2 focus:outline-none ${color.value} ${
                       selectedColor === color.value
-                        ? 'ring-2 ring-blue-500 ring-offset-2'
-                        : ''
+                        ? 'ring-2 ring-blue-500'
+                        : 'ring-2 ring-transparent'
                     }`}
                     onClick={() => handleColorChange(color.value)}
                   />
