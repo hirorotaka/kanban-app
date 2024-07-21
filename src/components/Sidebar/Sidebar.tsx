@@ -21,7 +21,7 @@ export const Sidebar = () => {
   }, [boardId, navItems, setNavCheckId]);
 
   return (
-    <div className=" flex h-screen  min-w-[250px]  max-w-[250px] flex-col border-r bg-gray-100 p-4">
+    <div className=" flex h-screen  min-w-64  max-w-64 flex-col border-r bg-gray-100 p-4">
       <Link to="/" className="wave-effect">
         <Logo />
       </Link>

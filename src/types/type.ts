@@ -75,7 +75,7 @@ export type TaskProps = {
 
 export type NavItemProps = {
   id: string;
-  icon: JSX.Element;
+  icon: string;
   label: string;
 };
 

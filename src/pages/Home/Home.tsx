@@ -1,6 +1,6 @@
 export const Home = () => {
   return (
-    <div className="relative flex h-full items-center justify-center">
+    <div className="relative flex h-screen items-center justify-center">
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
         style={{ backgroundImage: "url('/thumbnail.png')" }}
