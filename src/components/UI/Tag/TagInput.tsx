@@ -319,6 +319,7 @@ export const TagInput = ({
         isOpen={deleteConfirmationOpen}
         onConfirm={handleDeleteConfirmation}
         onCancel={() => setDeleteConfirmationOpen(false)}
+        message="本当にこのタグを削除しますか？すべてのタスクから削除されます。"
       />
     </div>
   );

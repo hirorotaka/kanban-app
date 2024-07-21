@@ -172,6 +172,7 @@ export type DeleteConfirmationModalProps = {
   isOpen: boolean;
   onConfirm: () => void;
   onCancel: () => void;
+  message: string;
 };
 
 export type TagShowProps = {

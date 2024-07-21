@@ -11,6 +11,7 @@ export const DeleteConfirmationModal = ({
   isOpen,
   onConfirm,
   onCancel,
+  message,
 }: DeleteConfirmationModalProps) => {
   return (
     <AnimatePresence>
@@ -28,12 +29,8 @@ export const DeleteConfirmationModal = ({
             animate="visible"
             exit="exit"
           >
-            <h2 className="mb-4 text-xl font-bold">タグの削除</h2>
-            <p className="mb-4">
-              本当にこのタグを削除しますか？
-              <br />
-              こちらで設定しているタグは全てのタスクから削除されます。
-            </p>
+            <h2 className="mb-4 text-xl font-bold">削除</h2>
+            <p className="mb-4">{message}</p>
             <div className="flex justify-end">
               <motion.button
                 className="mr-2 rounded-md bg-gray-200 px-4 py-2 text-gray-700"
