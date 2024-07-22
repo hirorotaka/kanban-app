@@ -178,3 +178,13 @@ export type TagShowProps = {
   filteredTags: Tag[];
   setIsTagEdit: React.Dispatch<React.SetStateAction<boolean>>;
 };
+
+export type AddButtonProps = {
+  onClickCreateTask: () => void;
+  bgColor: string;
+};
+
+export type TrashIconProps = {
+  onClickDelete: () => void;
+  TextColor: string;
+};

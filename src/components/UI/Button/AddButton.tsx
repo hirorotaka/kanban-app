@@ -1,5 +1,5 @@
 import { IoAdd } from 'react-icons/io5';
-import { AddButtonProps } from '../../types/type';
+import { AddButtonProps } from '../../../types/type';
 
 export const AddButton = ({ onClickCreateTask, bgColor }: AddButtonProps) => (
   <button

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { generateId } from '../../../utils/utils';
 import { BoardContext } from '../../../context/BoardContext';
 import { Tag, TagInputProps, TagList } from '../../../types/type';
