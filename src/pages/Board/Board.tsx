@@ -1,8 +1,8 @@
 import { useContext } from 'react';
+import { NavItemContext } from '../../context/NavItemContext';
 import { Header } from '../../components/Header/Header';
 import { KanbanBoard } from '../../components/kanban/KanbanBoard';
-import { NavItemContext } from '../../context/NavItemContext';
-import { NotFound } from '../NotFound';
+import { NotFound } from '../NotFound/NotFound';
 
 export const Board = () => {
   const { navItems, navCheckId } = useContext(NavItemContext) || {};

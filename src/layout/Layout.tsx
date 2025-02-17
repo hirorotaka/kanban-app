@@ -1,7 +1,7 @@
+import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Sidebar } from '../components/Sidebar/Sidebar';
 import { GoSidebarCollapse, GoSidebarExpand } from 'react-icons/go';
-import { useState } from 'react';
 
 export const Layout = () => {
   const [isOpen, setIsOpen] = useState(false);

@@ -1,8 +1,8 @@
-import { IoTrashOutline } from 'react-icons/io5';
-import { NavItemContext } from '../../context/NavItemContext';
 import { useContext, useState } from 'react';
-import { NavItemProps } from '../../types/type';
+import { NavItemContext } from '../../context/NavItemContext';
 import { DeleteConfirmationModal } from '../UI/Modal/DeleteConfirmationModal';
+import { IoTrashOutline } from 'react-icons/io5';
+import { NavItemProps } from '../../types/type';
 
 export const NavItem = ({ id, icon, label }: NavItemProps) => {
   const { removeNavItem, setNavCheckId, navCheckId } =

@@ -11,7 +11,7 @@ import { useTaskContentEdit } from '../../hooks/useTaskContentEdit';
 import { TextAreaContentForm } from '../UI/Form/TextAreaContentForm';
 import { CustomErrorMessage } from '../CustomErrorMessage/CustomErrorMessage';
 
-export const CardTask = ({ task }: TaskProps) => {
+export const TaskCard = ({ task }: TaskProps) => {
   const { deleteTask, updateTask } = useContext(BoardContext)?.task || {};
   const { allTags } = useContext(BoardContext)?.tag || {};
 

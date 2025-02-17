@@ -1,10 +1,10 @@
+import { useContext } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
+import { BoardContext } from '../context/BoardContext';
 import { generateId } from '../utils/utils';
 import { Tag, TagList } from '../types/type';
-import { BoardContext } from '../context/BoardContext';
-import { useContext } from 'react';
 
 const validationMaxLength = 20;
 

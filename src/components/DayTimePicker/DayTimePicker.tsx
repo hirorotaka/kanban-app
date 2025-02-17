@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { Task } from '../../types/type';
 import DatePicker, { registerLocale } from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import { format, isToday, isAfter } from 'date-fns';
 import { ja } from 'date-fns/locale';
 registerLocale('ja', ja);
-import './DayTimePicker.css';
-
 import { CustomDatePickerHeader } from './CustomDatePickerHeader';
+import './DayTimePicker.css';
+import 'react-datepicker/dist/react-datepicker.css';
+import { Task } from '../../types/type';
 
 export type DayTimePickerProps = {
   task: Task;

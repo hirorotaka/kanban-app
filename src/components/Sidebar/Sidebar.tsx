@@ -1,9 +1,9 @@
+import { useContext, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { NavItemContext } from '../../context/NavItemContext';
 import { PlusIcon } from '../UI/icons/PlusIcon';
 import { Logo } from './Logo';
 import { NavItem } from './NavItem';
-import { useContext, useEffect } from 'react';
-import { NavItemContext } from '../../context/NavItemContext';
 
 export const Sidebar = () => {
   const { navItems, setNavCheckId, createNewNavItem } =

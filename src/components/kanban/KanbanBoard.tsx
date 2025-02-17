@@ -1,4 +1,4 @@
-import { ColumnContainer } from './ColumnContainer';
+import { useContext, useState } from 'react';
 import {
   DndContext,
   DragEndEvent,
@@ -11,12 +11,12 @@ import {
 } from '@dnd-kit/core';
 import { createPortal } from 'react-dom';
 import { SortableContext, arrayMove } from '@dnd-kit/sortable';
-import { useContext, useState } from 'react';
-import { Column, Task } from '../../types/type';
-import { CardTask } from './TaskCard';
-import { IoAdd } from 'react-icons/io5';
+import { TaskCard } from './TaskCard';
+import { ColumnContainer } from './ColumnContainer';
 import { BoardContext } from '../../context/BoardContext';
 import { NavItemContext } from '../../context/NavItemContext';
+import { IoAdd } from 'react-icons/io5';
+import { Column, Task } from '../../types/type';
 
 export const KanbanBoard = () => {
   const { navCheckId } = useContext(NavItemContext) || {};
@@ -182,7 +182,7 @@ export const KanbanBoard = () => {
               )}
             />
           )}
-          {activeTask && <CardTask task={activeTask} />}
+          {activeTask && <TaskCard task={activeTask} />}
         </DragOverlay>,
         document.body
       )}

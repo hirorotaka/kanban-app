@@ -1,12 +1,12 @@
+import { useContext, useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import './App.css';
-import { NotFound } from './pages/NotFound';
+import { NavItemContext } from './context/NavItemContext';
+import { Layout } from './layout/Layout';
+import { NotFound } from './pages/NotFound/NotFound';
 import { Board } from './pages/Board/Board';
 import { Home } from './pages/Home/Home';
-import { Layout } from './layout/Layout';
-import { BoardDelete } from './pages/BoardDelete';
-import { useContext, useEffect } from 'react';
-import { NavItemContext } from './context/NavItemContext';
+import { BoardDelete } from './pages/BoardDelete/BoardDelete';
+import './App.css';
 
 function App() {
   const { deleted, setDeleted } = useContext(NavItemContext) || {};

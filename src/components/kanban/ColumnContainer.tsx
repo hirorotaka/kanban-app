@@ -1,15 +1,15 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { ColumnContainerProps, Task } from '../../types/type';
-import { CardTask } from './TaskCard';
+import { SortableContext } from '@dnd-kit/sortable';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { IoAdd, IoApps } from 'react-icons/io5';
-import { SortableContext } from '@dnd-kit/sortable';
 import { BoardContext } from '../../context/BoardContext';
-import { CustomErrorMessage } from '../CustomErrorMessage/CustomErrorMessage';
 import { useColumnTitleEdit } from '../../hooks/useColumTitleEdit';
+import { TaskCard } from './TaskCard';
+import { CustomErrorMessage } from '../CustomErrorMessage/CustomErrorMessage';
 import { InputForm } from '../UI/Form/InputForm';
 import { DropdownMenu } from '../UI/Menu/DropDownMenu';
+import { IoAdd, IoApps } from 'react-icons/io5';
+import { ColumnContainerProps, Task } from '../../types/type';
 
 export const ColumnContainer = ({
   column,
@@ -156,7 +156,7 @@ export const ColumnContainer = ({
       >
         {/* @dnd-kit/sortableを使用してタスクのドラッグ&ドロップ機能を実装 */}
         <SortableContext items={tasksIds || []}>
-          {filterTasks?.map((task) => <CardTask key={task.id} task={task} />)}
+          {filterTasks?.map((task) => <TaskCard key={task.id} task={task} />)}
         </SortableContext>
       </div>
       {/* タスク追加ボタンの表示 */}

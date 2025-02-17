@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
-import { Task } from '../types/type';
 import { defaultTasks } from '../data/kanbanData';
 import { generateId } from '../utils/utils';
+import { Task } from '../types/type';
 
 export const useTask = () => {
   const [tasks, setTasks] = useState<Task[]>(defaultTasks);

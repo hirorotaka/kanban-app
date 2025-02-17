@@ -1,18 +1,18 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { generateId } from '../../../utils/utils';
 import { BoardContext } from '../../../context/BoardContext';
-import { Tag, TagInputProps, TagList } from '../../../types/type';
+import { useTagNameEdit } from '../../../hooks/useTagNameEdit';
+import { useTagNameInput } from '../../../hooks/useTagNameInput';
+import { generateId } from '../../../utils/utils';
 import { TagInputClose } from './TagInputClose';
 import { TagInputList } from './TagInputList';
 import { TagInputSelectList } from './TagInputSelectList';
 import { DeleteConfirmationModal } from '../Modal/DeleteConfirmationModal';
-import { useTagNameInput } from '../../../hooks/useTagNameInput';
 import { InputTagForm } from '../Form/InputTagForm';
-import { CustomErrorMessage } from '../../CustomErrorMessage/CustomErrorMessage';
 import { InputTagEditForm } from '../Form/InputTagEditForm';
-import { useTagNameEdit } from '../../../hooks/useTagNameEdit';
-import { IoClose, IoTrash } from 'react-icons/io5';
+import { CustomErrorMessage } from '../../CustomErrorMessage/CustomErrorMessage';
 import { TagColorList } from '../../../data/ColorList';
+import { IoClose, IoTrash } from 'react-icons/io5';
+import { Tag, TagInputProps, TagList } from '../../../types/type';
 
 export const TagInput = ({
   filteredTags = [],

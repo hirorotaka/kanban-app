@@ -1,4 +1,12 @@
 import { createContext, useContext, useMemo, useState } from 'react';
+import { UniqueIdentifier } from '@dnd-kit/core';
+import { NavItemContext } from './NavItemContext';
+import { generateId } from '../utils/utils';
+import {
+  defaultColumns,
+  defaultTasks,
+  initialTagList,
+} from '../data/kanbanData';
 import {
   BoardContextValues,
   Column,
@@ -7,14 +15,6 @@ import {
   TagList,
   Task,
 } from '../types/type';
-import {
-  defaultColumns,
-  defaultTasks,
-  initialTagList,
-} from '../data/kanbanData';
-import { generateId } from '../utils/utils';
-import { NavItemContext } from './NavItemContext';
-import { UniqueIdentifier } from '@dnd-kit/core';
 
 // 初期値を設定してコンテキストを作成
 export const BoardContext = createContext<BoardContextValues | undefined>(
