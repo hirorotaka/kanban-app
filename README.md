@@ -60,3 +60,10 @@ URL：https://task-kanban-board.netlify.app/
 - framer-motion: アニメーション
 - emoji-mart: 絵文字選択
 - react-datepicker: 日付選択
+
+
+#### 画面構成
+
+| TOP | タスクボード |
+| -------- | ------------ |
+|![スクリーンショット 2025-02-17 17 35 26](https://github.com/user-attachments/assets/f02a4ef3-1476-472f-b05b-c2a7345bdcfb)|![スクリーンショット 2025-02-17 17 36 18](https://github.com/user-attachments/assets/dc6488f1-dad9-41c5-8fe8-aed36d0965b8)|
