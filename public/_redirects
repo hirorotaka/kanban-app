@@ -1,0 +1,4 @@
+/*                 /index.html 200
+/board/*          /board/:boardId 200
+/notfoundboard    /notfoundboard 200
+/*                /404.html 404
