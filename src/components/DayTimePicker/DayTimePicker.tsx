@@ -4,8 +4,8 @@ import { format, isToday, isAfter } from 'date-fns';
 import { ja } from 'date-fns/locale';
 registerLocale('ja', ja);
 import { CustomDatePickerHeader } from './CustomDatePickerHeader';
-import './DayTimePicker.css';
 import 'react-datepicker/dist/react-datepicker.css';
+import './DayTimePicker.css';
 import { Task } from '../../types/type';
 
 export type DayTimePickerProps = {
